@@ -16,4 +16,19 @@ export interface WikipediaThumbnail {
     descripcion: string;
     wikipediaSlug: string;
   }
+
+  export interface Usuario {
+    id?: number;
+    email: string;
+    password: string;
+    fechaNacimiento: string;
+    nombre: string;
+    genero: 'hombre' | 'mujer' | 'otro';
+    descripcion: string;
+    tipoUsuario: 'local' | 'viajero';
+    idioma: string;
+    pais: 'España';
+    ciudadLocal: string;
+    fotoPerfil: string;
+  }
   

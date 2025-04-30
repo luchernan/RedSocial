@@ -1,20 +1,10 @@
-import type { Route } from "./+types/home";
-import DestinoMenu from "~/components/DestinoMenu";
-import DestinoSearchBar from "~/components/DestinoSearchBar";
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+import { Outlet } from "react-router";
+import { useState } from "react";
 
 export default function Home() {
+  const [search, setSearch] = useState<string>("");
+
   return (
-    <main>
-      <DestinoSearchBar />
-      <h1 className="text-2xl font-bold text-center mt-4">Buscar Destino</h1>
-      <DestinoMenu />
-    </main>
+    <Outlet /> // Aquí se cargará `inicio.tsx` automáticamente
   );
 }
