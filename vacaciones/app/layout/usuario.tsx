@@ -17,6 +17,7 @@ const UsuarioForm = () => {
     pais: "España",
     ciudadLocal: "",
     fotoPerfil: "",
+    
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

@@ -30,5 +30,6 @@ export interface WikipediaThumbnail {
     pais: 'España';
     ciudadLocal: string;
     fotoPerfil: string;
+    edad?: number;
   }
   

@@ -12,6 +12,7 @@ const FiltroUsuario = () => {
   // Llamada a la API para obtener los usuarios filtrados
   const fetchUsuariosFiltrados = async () => {
     const usuarios = await obtenerUsuariosFiltrados(genero, edadMinima, edadMaxima, idioma);
+    console.log("Usuarios desde la API:", usuarios);
     setUsuariosFiltrados(usuarios);
   };
 
