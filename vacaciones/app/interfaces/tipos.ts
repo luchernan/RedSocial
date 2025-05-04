@@ -32,4 +32,18 @@ export interface WikipediaThumbnail {
     fotoPerfil: string;
     edad?: number;
   }
+
+  export interface Fotoperfil{
+    id?: number;
+    url: string;
+  }
   
+
+  export interface Viaje {
+    id: number;
+    usuarioId: number;
+    destinoId: number;
+    fechaInicio: string; // o Date, si lo parseas luego
+    fechaFin: string;    // o Date
+    usuario: Usuario;
+  }

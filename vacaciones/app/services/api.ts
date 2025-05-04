@@ -1,10 +1,79 @@
-import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario } from "../interfaces/tipos";
+import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Fotoperfil, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:9a222672-3ab7-4abf-b175-74c0be028795');
+const authHeader = 'Basic ' + btoa('user:91ff3bcd-a493-4959-9cd2-02867552db5d');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
+
+export async function obtenerViajesFiltradosPorUsuarios(
+    genero?: string,
+    edadMinima?: number,
+    edadMaxima?: number,
+    idioma?: string
+  ): Promise<Viaje[]> {
+    try {
+      const usuarios = await obtenerUsuariosFiltrados(genero, edadMinima, edadMaxima, idioma);
+  
+      const idsUsuarios = usuarios.map(u => u.id);
+  
+      const response = await fetch("http://localhost:8586/viajes"); // Ajusta si tienes otro endpoint
+  
+      if (!response.ok) {
+        throw new Error("Error al obtener los viajes");
+      }
+  
+      const viajes: Viaje[] = await response.json();
+  
+      return viajes.filter(viaje => idsUsuarios.includes(viaje.usuario.id));
+    } catch (error) {
+      console.error("Error:", error);
+      return [];
+    }
+  }
+  
+
+
+export const getViajesPorDestino = async (destinoId: number): Promise<Viaje[]> => {
+  const res = await fetch(`http://localhost:8586/viajes/destino/${destinoId}`);
+  if (!res.ok) {
+    throw new Error("Error al obtener viajes");
+  }
+  return await res.json();
+};
+
+
+
+
+export async function crearViaje(viaje: {
+    usuarioId: number;
+    destinoId: number;
+    fechaInicio: string;
+    fechaFin: string;
+  }): Promise<any> {
+    try {
+      const response = await fetch("http://localhost:8586/viajes/viajes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(viaje),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error al crear el viaje");
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("Error creando viaje:", error);
+      throw error;
+    }
+  }
+  
+
+
 
 export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   try {
@@ -27,7 +96,7 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   }
 }
 
-export async function obtenerUsuarioLogueado(): Promise<Usuario | string> {
+export async function obtenerUsuarioLogueado(): Promise<Usuario> {
     try {
       const response = await fetch("http://localhost:8586/viajes/usuario-logueado", {
         method: "GET",
@@ -158,6 +227,18 @@ export async function login(email: string, password: string) {
     });
   }
   
+  export async function obtenerFotosPerfil(): Promise<Fotoperfil[]> {
+    try {
+      const response = await fetch("http://localhost:8586/viajes/fotoperfil");
+      if (!response.ok) {
+        throw new Error("Error al obtener las fotos de perfil");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error al obtener las fotos de perfil:", error);
+      throw error;
+    }
+  }
 
     
     

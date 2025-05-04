@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { getAllDestinos } from "../services/api"; 
 import type { Destino } from "../interfaces/tipos"; 
 
-export default function DestinoSearchBar() {
+type DestinoSearchBarProps = {
+  onDestinoSeleccionado: (destino: Destino) => void;
+};
+
+export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearchBarProps) {
   const [destinos, setDestinos] = useState<Destino[]>([]);
   const [busqueda, setBusqueda] = useState("");
   const [resultado, setResultado] = useState<Destino | null>(null);
@@ -21,6 +25,7 @@ export default function DestinoSearchBar() {
     if (encontrado) {
       setResultado(encontrado);
       setError("");
+      onDestinoSeleccionado(encontrado);
     } else {
       setResultado(null);
       setError("Destino no encontrado");

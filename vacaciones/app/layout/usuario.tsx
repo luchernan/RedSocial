@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { crearUsuario } from "../services/api";
-import type { Usuario } from "../interfaces/tipos";
+import { crearUsuario,  } from "../services/api";
+import type { Usuario, Fotoperfil } from "../interfaces/tipos";
 import { useNavigate } from "react-router";
+
+import SelectorFotoPerfil from "~/components/SelectorFotoPerfil";
+
+
 
 const UsuarioForm = () => {
   const navigate = useNavigate();
@@ -77,7 +81,20 @@ const UsuarioForm = () => {
         <option value="España">España</option>
       </select>
       <input type="text" name="ciudadLocal" placeholder="Ciudad" value={usuario.ciudadLocal} onChange={handleChange} className="input" />
-      <input type="text" name="fotoPerfil" placeholder="URL Foto Perfil" value={usuario.fotoPerfil} onChange={handleChange} className="input" />
+      <div className="my-4">
+  <label className="block mb-2 font-semibold">Selecciona tu foto de perfil</label>
+  <SelectorFotoPerfil
+ onSeleccionar={(url: string) =>
+    setUsuario((prev) => ({
+      ...prev,
+      fotoPerfil: url,
+    }))
+  }
+  
+  
+  />
+</div>
+
       <button type="submit" className="btn">Crear Usuario</button>
     </form>
   );
