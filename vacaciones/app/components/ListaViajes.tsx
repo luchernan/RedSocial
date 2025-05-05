@@ -4,19 +4,23 @@ import type { Destino, Viaje } from "../interfaces/tipos";
 
 type ListaViajesProps = {
   destino: Destino;
+  onViajesCargados?: (viajes: Viaje[]) => void; // <- nueva prop opcional
 };
 
-const ListaViajes: React.FC<ListaViajesProps> = ({ destino }) => {
+const ListaViajes: React.FC<ListaViajesProps> = ({ destino, onViajesCargados }) => {
   const [viajes, setViajes] = useState<Viaje[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (destino.id) {
       getViajesPorDestino(destino.id)
-        .then(setViajes)
+        .then((data) => {
+          setViajes(data);
+          onViajesCargados?.(data); 
+        })
         .catch(() => setError("No se pudieron cargar los viajes."));
     }
-  }, [destino]);
+  }, [destino, onViajesCargados]);
 
   if (error) return <p className="text-red-500">{error}</p>;
   if (!viajes.length) return <p className="text-gray-500">No hay viajes para este destino.</p>;
@@ -33,11 +37,15 @@ const ListaViajes: React.FC<ListaViajesProps> = ({ destino }) => {
             <img
               src={viaje.usuario.fotoPerfil}
               alt="Foto de perfil"
-              className="w-12 h-12 rounded-full object-cover"
-            />
+              className="w-12 h-12 rounded-full object-cover"/>
+            
+            
             <div>
               <p className="font-semibold">{viaje.usuario.nombre}</p>
               <p className="text-sm text-gray-600">{viaje.usuario.genero}</p>
+              <p className="text-sm text-gray-600"> {viaje.usuario.idioma &&
+              viaje.usuario.idioma.charAt(0).toUpperCase() + viaje.usuario.idioma.slice(1)} </p>
+              <p className="text-sm text-gray-600">{viaje.usuario.edad}</p>
             </div>
           </div>
         </div>

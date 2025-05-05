@@ -13,7 +13,7 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes }) => {
     <div className="grid gap-4 p-4">
       {viajes.map((viaje) => (
         <div key={viaje.id} className="bg-white shadow rounded p-4">
-          <h2 className="text-xl font-bold mb-2">{viaje.destino.nombre}</h2>
+          {/* <h2 className="text-xl font-bold mb-2">{viaje.destino.nombre}</h2> */}
           <p>
             <span className="font-semibold">Fechas:</span> {viaje.fechaInicio} - {viaje.fechaFin}
           </p>
@@ -26,7 +26,11 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes }) => {
             <div>
               <p className="font-semibold">{viaje.usuario.nombre}</p>
               <p className="text-sm text-gray-600">{viaje.usuario.genero}</p>
-            </div>
+              <p className="text-sm text-gray-600"> {viaje.usuario.idioma &&
+              viaje.usuario.idioma.charAt(0).toUpperCase() + viaje.usuario.idioma.slice(1)} </p>
+
+              <p className="text-sm text-gray-600">{viaje.usuario.edad}</p>
+            </div>  
           </div>
         </div>
       ))}
