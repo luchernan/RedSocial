@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { obtenerFotosPerfil } from "../services/api";
-import type { Fotoperfil } from "../interfaces/tipos"; // Asegúrate de tener esta interfaz
+import type { Fotoperfil } from "../interfaces/tipos"; 
 
 interface Props {
   onSeleccionar: (url: string) => void;

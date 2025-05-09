@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { getAllDestinos } from "../services/api"; 
-import type { Destino } from "../interfaces/tipos"; 
+import { getAllDestinos, getImagenPexels } from "../services/api";
+import type { Destino } from "../interfaces/tipos";
 
 type DestinoSearchBarProps = {
   onDestinoSeleccionado: (destino: Destino) => void;
 };
 
+const PEXELS_API_KEY = "TU_API_KEY_DE_PEXELS"; // Sustituye por tu clave real
+
 export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearchBarProps) {
   const [destinos, setDestinos] = useState<Destino[]>([]);
   const [busqueda, setBusqueda] = useState("");
   const [resultado, setResultado] = useState<Destino | null>(null);
+  const [imagen, setImagen] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -18,7 +21,30 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
       .catch((err) => console.error("Error al obtener destinos:", err));
   }, []);
 
-  const handleBuscar = () => {
+  const obtenerImagenPexels = async (ciudad: string): Promise<string | null> => {
+    try {
+      const res = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(ciudad)}&per_page=10`,
+        {
+          headers: {
+            Authorization: PEXELS_API_KEY,
+          },
+        }
+      );
+      const data = await res.json();
+      const fotos = data.photos;
+      if (fotos && fotos.length > 0) {
+        const aleatoria = fotos[Math.floor(Math.random() * fotos.length)];
+        return aleatoria?.src?.landscape || null;
+      }
+      return null;
+    } catch (err) {
+      console.error("Error al obtener imagen de Pexels:", err);
+      return null;
+    }
+  };
+
+  const handleBuscar = async () => {
     const encontrado = destinos.find(
       (d) => d.nombre.toLowerCase() === busqueda.trim().toLowerCase()
     );
@@ -26,11 +52,16 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
       setResultado(encontrado);
       setError("");
       onDestinoSeleccionado(encontrado);
+  
+      const imagenPexels = await getImagenPexels(encontrado.nombre); // 🔄 Desde api.ts
+      setImagen(imagenPexels);
     } else {
       setResultado(null);
+      setImagen(null);
       setError("Destino no encontrado");
     }
   };
+  
 
   return (
     <div className="p-4 max-w-lg mx-auto">
@@ -61,6 +92,13 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
           >
             Ver en Wikipedia
           </a>
+          {imagen && (
+            <img
+              src={imagen}
+              alt={`Vista de ${resultado.nombre}`}
+              className="mt-4 rounded shadow-md max-h-64 object-cover w-full"
+            />
+          )}
         </div>
       )}
 

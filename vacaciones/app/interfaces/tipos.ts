@@ -47,3 +47,12 @@ export interface WikipediaThumbnail {
     fechaFin: string;    // o Date
     usuario: Usuario;
   }
+  export interface Mensaje {
+    id: number;
+    remitente: Usuario; // Asumimos que la interfaz Usuario ya está definida
+    destinatario: Usuario;
+    contenido: string;
+    fechaEnvio: string; // Podría ser un string que represente un datetime ISO 8601
+    leido: boolean;
+  }
+  

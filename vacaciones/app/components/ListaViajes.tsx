@@ -41,11 +41,14 @@ const ListaViajes: React.FC<ListaViajesProps> = ({ destino, onViajesCargados }) 
             
             
             <div>
+                
               <p className="font-semibold">{viaje.usuario.nombre}</p>
               <p className="text-sm text-gray-600">{viaje.usuario.genero}</p>
               <p className="text-sm text-gray-600"> {viaje.usuario.idioma &&
               viaje.usuario.idioma.charAt(0).toUpperCase() + viaje.usuario.idioma.slice(1)} </p>
               <p className="text-sm text-gray-600">{viaje.usuario.edad}</p>
+              <p className="text-sm text-gray-600">{viaje.usuario.descripcion}</p>
+              <p className="text-sm text-gray-600">{viaje.id}</p>
             </div>
           </div>
         </div>

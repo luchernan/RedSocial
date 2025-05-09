@@ -1,7 +1,7 @@
 import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Fotoperfil, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:91ff3bcd-a493-4959-9cd2-02867552db5d');
+const authHeader = 'Basic ' + btoa('user:1b4336a9-3cc1-4660-b7b6-aa364b34828b');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
@@ -73,7 +73,26 @@ export async function crearViaje(viaje: {
   }
   
 
-
+  export async function actualizarUsuario(id: number, usuarioActualizado: Partial<Usuario>): Promise<Usuario> {
+    try {
+      const response = await fetch(`http://localhost:8586/viajes/usuarios/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(usuarioActualizado),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error al actualizar el usuario");
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("Error actualizando usuario:", error);
+      throw error;
+    }
+  }
 
 export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   try {
@@ -241,47 +260,73 @@ export async function login(email: string, password: string) {
   }
 
     
-    
-    export async function obtenerResumenCiudad(ciudad: string): Promise<WikipediaSummary | null> {
-      try {
-        // 1. Obtener resumen de Wikipedia
-        const wikiRes = await fetch(
-          `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(ciudad)}`
-        );
-    
-        if (!wikiRes.ok) throw new Error("No se pudo obtener resumen");
-    
-        const wikiData = await wikiRes.json();
-    
-    
-    
-        // 2. Obtener 10 imágenes desde Pexels
-        const pexelsRes = await fetch(
-          `https://api.pexels.com/v1/search?query=${encodeURIComponent(ciudad)}&per_page=10`,
-          {
-            headers: {
-              Authorization: PEXELS_API_KEY,
-            },
-          }
-        );
-    
-        const pexelsData = await pexelsRes.json();
-        const fotos = pexelsData.photos;
-    
-        let image: string | undefined;
-    
-        if (fotos && fotos.length > 0) {
-          const aleatoria = fotos[Math.floor(Math.random() * fotos.length)];
-          image = aleatoria?.src?.landscape;
+
+  export async function getImagenPexels(ciudad: string): Promise<string | null> {
+
+  
+    try {
+      const res = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(ciudad)}&per_page=10`,
+        {
+          headers: {
+            Authorization: PEXELS_API_KEY,
+          },
         }
-    
-        return {
-          title: wikiData.title,
-          extract: wikiData.extract,
-          image,
-        };
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-        return null;
+      );
+      const data = await res.json();
+      const fotos = data.photos;
+      if (fotos && fotos.length > 0) {
+        const aleatoria = fotos[Math.floor(Math.random() * fotos.length)];
+        return aleatoria?.src?.landscape || null;
       }
+      return null;
+    } catch (err) {
+      console.error("Error al obtener imagen de Pexels:", err);
+      return null;
     }
+  }
+
+
+    
+    // export async function obtenerResumenCiudad(ciudad: string): Promise<WikipediaSummary | null> {
+    //   try {
+    //     // 1. Obtener resumen de Wikipedia
+    //     const wikiRes = await fetch(
+    //       `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(ciudad)}`
+    //     );
+    
+    //     if (!wikiRes.ok) throw new Error("No se pudo obtener resumen");
+    
+    //     const wikiData = await wikiRes.json();
+    
+    
+    //     // 2. Obtener 10 imágenes desde Pexels
+    //     const pexelsRes = await fetch(
+    //       `https://api.pexels.com/v1/search?query=${encodeURIComponent(ciudad)}&per_page=10`,
+    //       {
+    //         headers: {
+    //           Authorization: PEXELS_API_KEY,
+    //         },
+    //       }
+    //     );
+    
+    //     const pexelsData = await pexelsRes.json();
+    //     const fotos = pexelsData.photos;
+    
+    //     let image: string | undefined;
+    
+    //     if (fotos && fotos.length > 0) {
+    //       const aleatoria = fotos[Math.floor(Math.random() * fotos.length)];
+    //       image = aleatoria?.src?.landscape;
+    //     }
+    
+    //     return {
+    //       title: wikiData.title,
+    //       extract: wikiData.extract,
+    //       image,
+    //     };
+    //   } catch (error) {
+    //     console.error("Error al obtener datos:", error);
+    //     return null;
+    //   }
+    // }
