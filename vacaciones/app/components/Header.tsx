@@ -2,29 +2,23 @@ import React from "react";
 import logo from '../media/logo.png';
 import Logout from "~/components/Logout";
 import HeaderUsuario from "~/components/HeaderUsuario";
+import { Link } from "react-router";
 function Header() {
-   
-    return (
-        <div    className="flex items-center justify-between px-6 py-4 shadow-sm border-b border-gray-100"
-        style={{ backgroundColor: '#f1f0f5' }}
-      >
-        <div className="flex items-center">
-    <img 
-      src={logo} 
-      alt="Logo de la aplicación" 
-      className="h-10 w-auto transition-transform hover:scale-105" 
-    />
- <div className="flex items-center space-x-6">
 
+  return (
+    <div className="flex items-center justify-between px-4 py-3  ">
+    <Link to="/inicio" >
+      <h1 className="text-3xl font-rounded-black font-black text-white-900">
+        KissTrip
+      </h1>
+    </Link>
 
-
-
+    <div className="flex items-center gap-4">
+      <HeaderUsuario />
+      <Logout />
+    </div>
   </div>
-  <Logout></Logout>
-  <HeaderUsuario></HeaderUsuario>
-      </div>
-      </div>
-    );
+  );
 }
 
 export default Header;

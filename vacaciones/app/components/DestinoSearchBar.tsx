@@ -6,7 +6,6 @@ type DestinoSearchBarProps = {
   onDestinoSeleccionado: (destino: Destino) => void;
 };
 
-const PEXELS_API_KEY = "TU_API_KEY_DE_PEXELS"; // Sustituye por tu clave real
 
 export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearchBarProps) {
   const [destinos, setDestinos] = useState<Destino[]>([]);
@@ -21,28 +20,7 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
       .catch((err) => console.error("Error al obtener destinos:", err));
   }, []);
 
-  const obtenerImagenPexels = async (ciudad: string): Promise<string | null> => {
-    try {
-      const res = await fetch(
-        `https://api.pexels.com/v1/search?query=${encodeURIComponent(ciudad)}&per_page=10`,
-        {
-          headers: {
-            Authorization: PEXELS_API_KEY,
-          },
-        }
-      );
-      const data = await res.json();
-      const fotos = data.photos;
-      if (fotos && fotos.length > 0) {
-        const aleatoria = fotos[Math.floor(Math.random() * fotos.length)];
-        return aleatoria?.src?.landscape || null;
-      }
-      return null;
-    } catch (err) {
-      console.error("Error al obtener imagen de Pexels:", err);
-      return null;
-    }
-  };
+
 
   const handleBuscar = async () => {
     const encontrado = destinos.find(
@@ -52,8 +30,8 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
       setResultado(encontrado);
       setError("");
       onDestinoSeleccionado(encontrado);
-  
-      const imagenPexels = await getImagenPexels(encontrado.nombre); // 🔄 Desde api.ts
+
+      const imagenPexels = await getImagenPexels(encontrado.nombre); 
       setImagen(imagenPexels);
     } else {
       setResultado(null);
@@ -61,20 +39,21 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
       setError("Destino no encontrado");
     }
   };
-  
+
 
   return (
-    <div className="p-4 max-w-lg mx-auto">
+    <div className="p-4 max-w-lg mx-auto flex">
       <input
         type="text"
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
         placeholder="Buscar destino por nombre..."
-        className="border p-2 rounded w-full"
+        className="border  p-2 rounded w-full"
       />
+
       <button
         onClick={handleBuscar}
-        className="bg-blue-500 text-white mt-2 px-4 py-2 rounded hover:bg-blue-600"
+        className="border p-2 ms-5 rounded text-white mt-2 px-4 py-2  hover:bg-[#101828] transition-colors duration-400"
       >
         Buscar
       </button>

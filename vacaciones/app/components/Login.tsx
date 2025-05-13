@@ -76,7 +76,7 @@ const Login = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   id="remember-me"
                   name="remember-me"
@@ -86,13 +86,13 @@ const Login = () => {
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Recuérdame
                 </label>
-              </div>
+              </div> */}
 
-              <div className="text-sm">
+              {/* <div className="text-sm">
                 <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                   ¿Olvidaste tu contraseña?
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div>
