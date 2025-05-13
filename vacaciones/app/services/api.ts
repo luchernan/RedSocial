@@ -1,7 +1,7 @@
 import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Fotoperfil, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:13cb0ad8-6a11-4598-ad32-68bdd50dbb8c');
+const authHeader = 'Basic ' + btoa('user:660e89c2-0e16-4b58-bc43-d1ce210deda3');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";

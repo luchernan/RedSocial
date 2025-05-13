@@ -6,9 +6,9 @@ import { Link } from "react-router";
 function Header() {
 
   return (
-    <div className="flex items-center justify-between px-4 py-3  ">
+    <div className="flex items-center justify-between px-15 py-5  ">
     <Link to="/inicio" >
-      <h1 className="text-3xl font-rounded-black font-black text-white-900">
+      <h1 className="text-4xl font-rounded-black font-black text-white-900 transform hover:scale-105">
         KissTrip
       </h1>
     </Link>

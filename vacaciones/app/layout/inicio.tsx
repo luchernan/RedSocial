@@ -20,13 +20,13 @@ const Inicio = () => {
   return (
     <div>
       <div
-        className="bg-cover bg-center bg-no-repeat h-[600px]"
+        className="bg-cover bg-center bg-no-repeat h-screen"
         style={{ backgroundImage: `url(${bg})` }}
       >
 
-        <div className="flex items-center justify-between px-4 py-3  ">
+        <div className="flex items-center justify-between px-15 py-5  ">
           <Link to="/inicio" >
-            <h1 className="text-3xl font-rounded-black font-black text-gray-900">
+            <h1 className="text-4xl transform hover:scale-105 font-rounded-black font-black text-gray-900">
               KissTrip
             </h1>
           </Link>
@@ -38,7 +38,7 @@ const Inicio = () => {
         </div>
 
 
-        <h1 className="text-center mt-15 mb-10 text-5xl font-rounded-black font-black text-white-900" >
+        <h1 className="text-center mt-15 mb-10 text-6xl font-rounded-black font-black text-white-900" >
           ¿En qué ciudad quieres <br /> encontrar el Amor?
         </h1>
 

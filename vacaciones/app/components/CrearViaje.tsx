@@ -7,6 +7,7 @@ interface CrearViajeProps {
 }
 
 const CrearViaje: React.FC<CrearViajeProps> = ({ destino }) => {
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [usuarioId, setUsuarioId] = useState<number | null>(null);
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
@@ -35,32 +36,66 @@ const CrearViaje: React.FC<CrearViajeProps> = ({ destino }) => {
         fechaFin,
       });
       alert("Viaje creado con éxito");
+      setMostrarFormulario(false);
+      setFechaInicio("");
+      setFechaFin("");
     } catch {
       alert("Error al crear viaje");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 max-w-lg mx-auto">
-      <h2 className="text-xl font-bold mb-4">Crear viaje a: {destino?.nombre}</h2>
-      <input
-        type="date"
-        value={fechaInicio}
-        onChange={(e) => setFechaInicio(e.target.value)}
-        className="input"
-        required
-      />
-      <input
-        type="date"
-        value={fechaFin}
-        onChange={(e) => setFechaFin(e.target.value)}
-        className="input"
-        required
-      />
-      <button type="submit" className="btn mt-2">
-        Crear Viaje
-      </button>
-    </form>
+    <div className="w-full max-w-md mx-auto mt-8 bg-white rounded-xl shadow-lg p-6 text-gray-800">
+      {!mostrarFormulario ? (
+        <button
+          onClick={() => setMostrarFormulario(true)}
+          className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
+        >
+          Crear viaje a {destino?.nombre}
+        </button>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <h2 className="text-xl font-bold text-gray-900">
+            Fechas para {destino?.nombre}
+          </h2>
+          <div>
+            <label className="block text-sm font-medium mb-1">Inicio</label>
+            <input
+              type="date"
+              value={fechaInicio}
+              onChange={(e) => setFechaInicio(e.target.value)}
+              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Fin</label>
+            <input
+              type="date"
+              value={fechaFin}
+              onChange={(e) => setFechaFin(e.target.value)}
+              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400"
+              required
+            />
+          </div>
+          <div className="flex justify-between gap-4">
+            <button
+              type="submit"
+              className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
+            >
+              Confirmar viaje
+            </button>
+            <button
+              type="button"
+              onClick={() => setMostrarFormulario(false)}
+              className="w-full bg-gray-300 text-gray-800 font-semibold py-2 rounded hover:bg-gray-400 transition"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      )}
+    </div>
   );
 };
 

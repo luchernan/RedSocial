@@ -17,41 +17,45 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes }) => {
   if (!viajes.length) return <p className="text-gray-500">No hay viajes que coincidan con el filtro.</p>;
 
   return (
-    <div className="grid gap-4 p-4">
-      {viajes.map((viaje) => (
-        <div key={viaje.id} className="bg-white shadow rounded p-4">
-          <p>
-            <span className="font-semibold">Fechas:</span> {viaje.fechaInicio} - {viaje.fechaFin}
-          </p>
-          <div className="mt-2 flex items-center gap-4">
-            <img
-              src={viaje.usuario.fotoPerfil}
-              alt="Foto de perfil"
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <div className="flex-1">
-              <p className="font-semibold">{viaje.usuario.nombre}</p>
-              <p className="text-sm text-gray-600">{viaje.usuario.genero}</p>
-              <p className="text-sm text-gray-600">
-                {viaje.usuario.idioma &&
-                  viaje.usuario.idioma.charAt(0).toUpperCase() + viaje.usuario.idioma.slice(1)}
-              </p>
-              <p className="text-sm text-gray-600">{viaje.usuario.descripcion}</p>
-              <p className="text-sm text-gray-600">{viaje.usuario.edad}</p>
-            </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
+  {viajes.map((viaje) => (
+    <div
+      key={viaje.id}
+      className="bg-gray-950 text-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition duration-300"
+    >
+      <p className="text-sm text-gray-400 mb-2">
+        <span className="font-semibold text-white">Fechas:</span> {viaje.fechaInicio} - {viaje.fechaFin}
+      </p>
 
-            {viaje.usuario.id && (
-        <button
-            onClick={() => manejarChat(viaje.usuario.id!)}
-             className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded">
-           Chatear
-            </button>
-            )}
+      <div className="flex items-center gap-4">
+        <img
+          src={viaje.usuario.fotoPerfil}
+          alt="Foto de perfil"
+          className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
+        />
 
-          </div>
+        <div className="flex-1">
+          <p className="text-lg font-bold">{viaje.usuario.nombre}</p>
+          <p className="text-sm text-gray-400">{viaje.usuario.genero}</p>
+          <p className="text-sm text-gray-400 capitalize">{viaje.usuario.idioma}</p>
+          <p className="text-sm text-gray-300 italic truncate">{viaje.usuario.descripcion}</p>
+          <p className="text-sm text-gray-400">Edad: {viaje.usuario.edad}</p>
         </div>
-      ))}
+      </div>
+
+      {viaje.usuario.id && (
+        <button
+          onClick={() => manejarChat(viaje.usuario.id!)}
+          className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow hover:scale-105 transition transform"
+        >
+          Chatear
+        </button>
+      )}
     </div>
+  ))}
+</div>
+
+  
   );
 };
 

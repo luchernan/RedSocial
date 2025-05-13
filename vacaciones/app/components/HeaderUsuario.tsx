@@ -25,7 +25,7 @@ export default function HeaderUsuario() {
 
   return (
     <Link to="/infousuario" >
-    <div className="flex border items-center space-x-3 bg-amber-00  hover:bg-indigo-50/50 px-4 py-2 rounded-full transition-all duration-200 cursor-pointer group">
+    <div className="flex border font-rounded-black items-center space-x-3 bg-amber-00  hover:bg-indigo-50/50 px-4 py-2 rounded-full transition-all duration-200 cursor-pointer group">
      
      <div className="relative">
         <img
@@ -36,11 +36,11 @@ export default function HeaderUsuario() {
         <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
       </div>
       <div className="pr-2">
-        <p className="text-sm font-medium text-indigo-900">Hola, {usuario.nombre.split(' ')[0]}</p>
+        <p className="text-sm font-medium text-white">Hola, {usuario.nombre.split(' ')[0]}</p>
 
        
       </div>
-      {/* <Logout></Logout> */}
+
 
     </div>
         </Link>
