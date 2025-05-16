@@ -36,7 +36,7 @@ export default function HeaderUsuario() {
         <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
       </div>
       <div className="pr-2">
-        <p className="text-sm font-medium text-white">Hola, {usuario.nombre.split(' ')[0]}</p>
+        <p className="text-sm font-rounded-black font-medium text-white">Hola, {usuario.nombre.split(' ')[0]}</p>
 
        
       </div>

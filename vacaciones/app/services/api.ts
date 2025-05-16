@@ -1,10 +1,58 @@
-import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Fotoperfil, Viaje } from "../interfaces/tipos";
+import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Comentario, Fotoperfil,CrearComentarioDTO, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:660e89c2-0e16-4b58-bc43-d1ce210deda3');
+const authHeader = 'Basic ' + btoa('user:d2086594-bf6c-4fc9-a81b-72238d2e224f');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
+
+
+export async function getUsuarioPorId(id: number): Promise<Usuario> {
+  const res = await fetch(`http://localhost:8586/viajes/usuarios/${id}`);
+  if (!res.ok) {
+    throw new Error("Error al obtener usuario");
+  }
+  return await res.json();
+}
+
+
+
+// Obtener comentarios de un viaje
+export async function getComentariosPorViaje(viajeId: number): Promise<Comentario[]> {
+  const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}/comentarios`);
+  if (!res.ok) {
+    throw new Error("Error al obtener comentarios");
+  }
+  return await res.json();
+}
+
+// Crear un nuevo comentario 
+export async function crearComentario(comentario: CrearComentarioDTO): Promise<Comentario> {
+  const res = await fetch(`http://localhost:8586/viajes/comentarios`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(comentario),
+  });
+  if (!res.ok) {
+    throw new Error("Error al crear comentario");
+  }
+  return await res.json();
+}
+
+
+
+// Eliminar comentario
+export async function eliminarComentario(id: number): Promise<void> {
+  const res = await fetch(`http://localhost:8586/viajes/comentarios/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    throw new Error("Error al eliminar comentario");
+  }
+}
+
 
 export async function obtenerViajesFiltradosPorUsuarios(
     genero?: string,

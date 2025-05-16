@@ -74,7 +74,7 @@ const EditarPerfil = () => {
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
           {/* Encabezado */}
-          <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white">
+          <div className="bg-gradient-to-br from-amber-400 to-amber-600 p-6 text-white">
             <h1 className="text-2xl font-bold">Editar Perfil</h1>
             <p className="text-blue-100">Actualiza tu información personal</p>
           </div>

@@ -37,6 +37,17 @@ export interface WikipediaThumbnail {
     id?: number;
     url: string;
   }
+  export interface Comentario {
+    id: number;
+    contenido: string;
+    usuarioId: number;
+    viaje: Viaje;
+  }
+  export interface CrearComentarioDTO {
+    contenido: string;
+    usuarioId: number;
+    viajeId: number;
+  }
   
 
   export interface Viaje {

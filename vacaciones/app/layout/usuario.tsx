@@ -3,7 +3,7 @@ import { crearUsuario } from "../services/api";
 import type { Usuario, Fotoperfil } from "../interfaces/tipos";
 import { useNavigate } from "react-router";
 import SelectorFotoPerfil from "~/components/SelectorFotoPerfil";
-
+import Header from "~/components/Header";
 const UsuarioForm = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState<Usuario>({
@@ -52,10 +52,13 @@ const UsuarioForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div>
+      <Header></Header>
+    <div className="min-h-screen bg-gradient-to-br font-rounded-black from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      
       <div className="max-w-2xl mx-auto">
         <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-          <div className="bg-indigo-600 py-4 px-6">
+          <div className="bg-gradient-to-br from-amber-400 to-amber-600  py-4 px-6">
             <h1 className="text-2xl font-bold text-white">Crear nueva cuenta</h1>
             <p className="text-indigo-100">Completa tus datos para registrarte</p>
           </div>
@@ -65,7 +68,7 @@ const UsuarioForm = () => {
               {/* Columna izquierda */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email*</label>
+                  <label className="block text-sm font-rounded-black font-medium text-gray-700 mb-1">Email*</label>
                   <input
                     type="email"
                     name="email"
@@ -77,7 +80,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña*</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Contraseña*</label>
                   <input
                     type="password"
                     name="password"
@@ -89,7 +92,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de nacimiento*</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Fecha de nacimiento*</label>
                   <input
                     type="date"
                     name="fechaNacimiento"
@@ -100,7 +103,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo*</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Nombre completo*</label>
                   <input
                     type="text"
                     name="nombre"
@@ -112,7 +115,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Género</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Género</label>
                   <select
                     name="genero"
                     value={usuario.genero}
@@ -142,7 +145,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Idioma principal</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Idioma principal</label>
                   <select
                     name="idioma"
                     value={usuario.idioma}
@@ -163,7 +166,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">País</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">País</label>
                   <select
                     name="pais"
                     value={usuario.pais}
@@ -184,7 +187,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Ciudad</label>
                   <input
                     type="text"
                     name="ciudadLocal"
@@ -195,7 +198,7 @@ const UsuarioForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Descripción</label>
                   <textarea
                     name="descripcion"
                     value={usuario.descripcion}
@@ -208,7 +211,7 @@ const UsuarioForm = () => {
             </div>
 
             <div className="border-t border-gray-200 pt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-3">Foto de perfil</label>
+              <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-3">Foto de perfil</label>
               <SelectorFotoPerfil
                 onSeleccionar={(url: string) =>
                   setUsuario((prev) => ({
@@ -237,6 +240,7 @@ const UsuarioForm = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

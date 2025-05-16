@@ -47,7 +47,7 @@ const Inicio = () => {
 
         {destinoSeleccionado && (
           <>
-            <FiltroViajesPorUsuario viajes={viajesDestino} />
+            {/* <FiltroViajesPorUsuario viajes={viajesDestino} /> */}
             <ListaViajes destino={destinoSeleccionado} onViajesCargados={setViajesDestino} />
             <CrearViaje destino={destinoSeleccionado} />
           </>

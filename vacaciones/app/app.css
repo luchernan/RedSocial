@@ -10,6 +10,8 @@
 
 html,
 body {
+  /* En tu archivo global.css */
+
   @apply 
   /* bg-white  */
   dark:bg-gray-950;

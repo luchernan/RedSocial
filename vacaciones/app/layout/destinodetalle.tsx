@@ -21,6 +21,7 @@ export default function DestinoDetalle() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [viajesDestino, setViajesDestino] = useState<Viaje[]>([]);
+    const [filtroActivo, setFiltroActivo] = useState(false);
 
     useEffect(() => {
         const cargarDestino = async () => {
@@ -158,21 +159,44 @@ export default function DestinoDetalle() {
                         </div>
 
                     </div>
-                    <div className="text-center mb-10">
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Encuentra compañeros de viaje</h1>
-                        <p className="text-gray-600">Filtra por tus preferencias para encontrar el viaje perfecto</p>
+                    <div className="text-center mb-1">
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Encuentra a tu media naranja 🍊</h1>
+                        <p className="text-gray-600">Filtra por tus preferencias para encontrar la persona perfecta</p>
                     </div>
 
                     {destino && (
                         <>
-                            <FiltroViajesPorUsuario viajes={viajesDestino} />
-                            <ListaViajes
-                                destino={destino}
-                                onViajesCargados={setViajesDestino}
-                            />
-                            <CrearViaje destino={destino} />
+                            <div className="flex">
+
+                                <FiltroViajesPorUsuario
+                                    viajes={viajesDestino}
+                                    onFiltroActivoChange={setFiltroActivo}
+                                />
+
+                            </div>
+
+
+
+                            <div style={{ display: 'none' }}>
+
+                                {!filtroActivo && (
+                                    <ListaViajes
+                                        destino={destino}
+                                        onViajesCargados={setViajesDestino}
+                                    />
+                                )}
+
+
+                            </div>
+
+
                         </>
                     )}
+<div className="text-center mb-1">
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">¿No encuentras al compañero ideal?</h1>
+                        <p className="text-gray-600">¡Crea tu propio Viaje!</p>
+                    <CrearViaje destino={destino} />
+                    </div>
                 </div>
             </div>
         </div>
