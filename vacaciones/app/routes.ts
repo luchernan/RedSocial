@@ -6,6 +6,7 @@ export default [
         route("usuario", "layout/usuario.tsx"),
         route("editarusuario", "layout/editarusuario.tsx"),
         route("infousuario", "layout/infousuario.tsx"),
+         route("misviajes", "layout/misviajes.tsx"),
         route("inicio", "layout/inicio.tsx"),
         route("chat:usuarioId", "layout/chat.tsx"),
         route("destinodetalle/:destinoId", "layout/destinodetalle.tsx"),

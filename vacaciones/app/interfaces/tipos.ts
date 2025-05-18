@@ -58,6 +58,17 @@ export interface WikipediaThumbnail {
     fechaFin: string;    // o Date
     usuario: Usuario;
   }
+  export interface ViajeMio {
+    id: number;
+    usuarioId: number;
+    destino: Destino;
+    fechaInicio: string; 
+    fechaFin: string;    
+    usuario: Usuario;
+  }
+
+
+
   export interface Mensaje {
     id: number;
     remitente: Usuario; // Asumimos que la interfaz Usuario ya está definida

@@ -1,10 +1,45 @@
 import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Comentario, Fotoperfil,CrearComentarioDTO, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:d2086594-bf6c-4fc9-a81b-72238d2e224f');
+const authHeader = 'Basic ' + btoa('user:be763984-ea9d-4126-ad41-4006afaf50d7');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
+
+
+export async function getViajesParticipadosIds(usuarioId: number): Promise<number[]> {
+  const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/viajes-participados`, {
+    headers: {
+      Authorization: authHeader
+    }
+  });
+  if (!res.ok) {
+    throw new Error("Error al obtener IDs de viajes participados");
+  }
+  return res.json(); 
+}
+export async function getViajeById(viajeId: number): Promise<Viaje> {
+  const res = await fetch(`http://localhost:8586/viajes//viajes/${viajeId}`, {
+    headers: {
+      Authorization: authHeader
+    }
+  });
+  if (!res.ok) {
+    throw new Error(`Error al obtener viaje con ID ${viajeId}`);
+  }
+  return res.json();
+}
+export async function getMisViajesParticipados(usuarioId: number): Promise<Viaje[]> {
+  const ids = await getViajesParticipadosIds(usuarioId);
+  const viajes = await Promise.all(ids.map((id) => getViajeById(id)));
+  return viajes;
+}
+
+export async function getComentariosUsuario(usuarioId: number): Promise<Comentario[]> {
+  const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/comentarios`);
+  if (!res.ok) throw new Error("Error al obtener comentarios de usuario");
+  return res.json();
+}
 
 
 export async function getUsuarioPorId(id: number): Promise<Usuario> {
@@ -167,7 +202,7 @@ export async function obtenerUsuarioLogueado(): Promise<Usuario> {
     try {
       const response = await fetch("http://localhost:8586/viajes/usuario-logueado", {
         method: "GET",
-        credentials: "include", // Incluir cookies de sesión
+        credentials: "include", 
       });
   
       if (!response.ok) {

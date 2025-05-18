@@ -64,12 +64,7 @@ export default function DestinoDetalle() {
             <Header></Header>
             <div className="w-full min-h-screen bg-gradient-to-b from-white to-amber-200 text-white">
                 <div className="max-w-8xl mx-auto p-6">
-                    {/* <button
-            onClick={() => navigate(-1)}
-            className="mb-6 px-4 py-2 bg-white text-gray-800 font-semibold rounded hover:bg-gray-100 transition"
-          >
-            ← Volver
-          </button> */}
+                 
 
                     <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-10 transition-all duration-300 hover:shadow-3xl group">
                         {imagen && (
@@ -160,7 +155,7 @@ export default function DestinoDetalle() {
 
                     </div>
                     <div className="text-center mb-1">
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Encuentra a tu media naranja 🍊</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Encuentra amigos para explorar la ciudad</h1>
                         <p className="text-gray-600">Filtra por tus preferencias para encontrar la persona perfecta</p>
                     </div>
 
@@ -192,10 +187,10 @@ export default function DestinoDetalle() {
 
                         </>
                     )}
-<div className="text-center mb-1">
+                    <div className="text-center mb-1">
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">¿No encuentras al compañero ideal?</h1>
                         <p className="text-gray-600">¡Crea tu propio Viaje!</p>
-                    <CrearViaje destino={destino} />
+                        <CrearViaje destino={destino} />
                     </div>
                 </div>
             </div>
