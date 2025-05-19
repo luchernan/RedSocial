@@ -4,7 +4,7 @@ import HeaderUsuario from "~/components/HeaderUsuario";
 import Logout from "~/components/Logout";
 import React, { useState, useEffect } from "react";
 import DestinoCard from "../components/DestinoCard";
-import { getDestinoById } from "../services/api";
+import { getDestinoById, obtenerUsuarioLogueado } from "../services/api";
 import { useLoaderData, useOutletContext } from "react-router";
 import { useNavigate } from "react-router";
 import type { Destino, Viaje } from "../interfaces/tipos";
@@ -17,8 +17,20 @@ import { Link, Navigate } from "react-router";
 function Inicio() {
   const [destinoSeleccionado, setDestinoSeleccionado] = useState<Destino | null>(null);
   const [viajesDestino, setViajesDestino] = useState<Viaje[]>([]);
+  const [tieneSesion, setTieneSesion] = useState<boolean>(false);
   const [aleatorios, setAleatorios] = useState<Destino[]>([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        await obtenerUsuarioLogueado();
+        setTieneSesion(true);
+      } catch {
+        setTieneSesion(false);
+      }
+    }
+    checkSession();
+  }, []);
 
   useEffect(() => {
     const ids = new Set<number>();
@@ -26,7 +38,7 @@ function Inicio() {
       ids.add(Math.floor(Math.random() * 92) + 1);
     }
 
- 
+
     Promise.all(Array.from(ids).map((id) => getDestinoById(id)))
       .then(setAleatorios)
       .catch(console.error);
@@ -46,6 +58,16 @@ function Inicio() {
             </h1>
           </Link>
           <div className="flex items-center gap-4">
+        
+          {tieneSesion && (
+          <button
+            onClick={() => navigate("/misviajes")}
+            className="text-white hover:underline focus:outline-none"
+          >
+            Mis Viajes
+          </button>
+        )}
+
             <HeaderUsuario />
             <Logout />
           </div>
@@ -92,32 +114,32 @@ function Inicio() {
         </div>
 
         <div className="text-center mt-12">
-        <button
-  onClick={() => {
-    const randomId = Math.floor(Math.random() * 92) + 1;
-    navigate(`/destinodetalle/${randomId}`);
-  }}
-  className="px-8 py-3 bg-gradient-to-r from-amber-400 to-amber-600 text-white font-semibold rounded-full shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:from-amber-500 hover:to-amber-700 active:scale-95 active:shadow-inner"
->
-  <span className="flex items-center justify-center">
-    Sorpréndeme 
-    <svg
-      className="w-5 h-5 ml-2"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-      />
-    </svg>
-  </span>
-</button>
+          <button
+            onClick={() => {
+              const randomId = Math.floor(Math.random() * 92) + 1;
+              navigate(`/destinodetalle/${randomId}`);
+            }}
+            className="px-8 py-3 bg-gradient-to-r from-amber-400 to-amber-600 text-white font-semibold rounded-full shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:from-amber-500 hover:to-amber-700 active:scale-95 active:shadow-inner"
+          >
+            <span className="flex items-center justify-center">
+              Sorpréndeme
+              <svg
+                className="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                />
+              </svg>
+            </span>
+          </button>
 
-</div>
+        </div>
       </section>
 
 

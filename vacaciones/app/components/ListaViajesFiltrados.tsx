@@ -33,13 +33,10 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes }) => {
     setLoaded(true);
   }, []);
 
-  const manejarChat = (usuarioId: number) => {
-    navigate(`/chat/${usuarioId}`);
-  };
+  
 
-  // Control de renderizado dentro del return, NO return temprano que afecte hooks
   if (!usuario) {
-    return <p>Cargando usuario...</p>; // O null, pero que no afecte hooks
+    return <p>Cargando usuario...</p>; 
   }
 
   if (!viajes.length) {

@@ -54,8 +54,8 @@ export interface WikipediaThumbnail {
     id: number;
     usuarioId: number;
     destinoId: number;
-    fechaInicio: string; // o Date, si lo parseas luego
-    fechaFin: string;    // o Date
+    fechaInicio: string;
+    fechaFin: string;    
     usuario: Usuario;
   }
   export interface ViajeMio {

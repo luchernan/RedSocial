@@ -19,7 +19,7 @@ export async function getViajesParticipadosIds(usuarioId: number): Promise<numbe
   return res.json(); 
 }
 export async function getViajeById(viajeId: number): Promise<Viaje> {
-  const res = await fetch(`http://localhost:8586/viajes//viajes/${viajeId}`, {
+  const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
     headers: {
       Authorization: authHeader
     }
@@ -34,6 +34,9 @@ export async function getMisViajesParticipados(usuarioId: number): Promise<Viaje
   const viajes = await Promise.all(ids.map((id) => getViajeById(id)));
   return viajes;
 }
+
+
+
 
 export async function getComentariosUsuario(usuarioId: number): Promise<Comentario[]> {
   const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/comentarios`);
