@@ -1,12 +1,26 @@
 import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Comentario, Fotoperfil,CrearComentarioDTO, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:be763984-ea9d-4126-ad41-4006afaf50d7');
+const authHeader = 'Basic ' + btoa('user:7a46f0be-2b86-41e3-9635-431c60e99e7a');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
 
-
+/**
+ * Elimina un viaje por su ID.
+ * Lanza excepción si la operación falla.
+ */
+export async function deleteViajeById(viajeId: number): Promise<void> {
+  const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: authHeader,
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Error al eliminar viaje con ID ${viajeId}`);
+  }
+}
 export async function getViajesParticipadosIds(usuarioId: number): Promise<number[]> {
   const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/viajes-participados`, {
     headers: {
