@@ -30,8 +30,8 @@ const UsuarioLogueado = () => {
 
   if (cargando) {
     return (
-      <div className="flex justify-center items-center p-8">
-        <div className="animate-pulse flex space-x-4">
+      <div className="flex justify-center  items-center p-8">
+        <div className="animate-pulse  flex space-x-4">
           <div className="rounded-full bg-indigo-200 h-12 w-12"></div>
           <div className="flex-1 space-y-4 py-1">
             <div className="h-4 bg-indigo-200 rounded w-3/4"></div>
@@ -46,7 +46,7 @@ const UsuarioLogueado = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto  p-6">
       {usuario ? (
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
           {/* Header con foto y datos principales */}

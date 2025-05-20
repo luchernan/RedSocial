@@ -110,7 +110,7 @@ const MisViajes: React.FC = () => {
               />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-700">{viaje.usuario.nombre}</p>
+              <p className="text-lg rounded-black font-medium text-gray-700">{viaje.usuario.nombre}</p>
             </div>
           </div>
 

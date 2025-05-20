@@ -24,7 +24,7 @@ function Header() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-15 py-5">
+    <div className="flex bg-gradient-to-r from-blue-800 to-amber-900 items-center justify-between px-15 py-5">
       <div className="flex items-center gap-6">
         <Link to="/inicio">
           <h1 className="text-4xl font-rounded-black font-black text-white-900 transform hover:scale-105">
@@ -46,6 +46,12 @@ function Header() {
             Mis Viajes
           </button>
         )}
+          <button
+            onClick={() => navigate("/contacto")}
+            className="text-white hover:underline focus:outline-none"
+          >
+            Contacto
+          </button>
         <HeaderUsuario />
         <Logout />
       </div>

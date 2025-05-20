@@ -10,22 +10,22 @@
 
 html,
 body {
-  /* En tu archivo global.css */
+
 
   @apply 
-  /* bg-white  */
+
   dark:bg-gray-950;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
-  /* Clases personalizadas para la fuente redondeada */
+
 .rounded-black {
   font-family: var(--font-rounded-black);
-  font-weight: 900; /* Black */
+  font-weight: 900; 
 }
 
-/* Opcional: Extiende Tailwind con la nueva fuente */
+
 @layer utilities {
   .font-rounded-black {
     font-family: var(--font-rounded-black);

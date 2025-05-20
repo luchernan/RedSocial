@@ -4,6 +4,8 @@ import type { Usuario, Fotoperfil } from "../interfaces/tipos";
 import { useNavigate } from "react-router";
 import SelectorFotoPerfil from "~/components/SelectorFotoPerfil";
 import Header from "~/components/Header";
+import ProfilePhotoUploader from "~/components/ProfilePhotoUploader";
+
 const UsuarioForm = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState<Usuario>({
@@ -52,7 +54,7 @@ const UsuarioForm = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gradient-to-r from-blue-300 to-amber-200">
       <Header></Header>
     <div className="min-h-screen bg-gradient-to-br font-rounded-black from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
       

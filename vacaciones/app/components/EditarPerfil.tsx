@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { obtenerUsuarioLogueado, actualizarUsuario } from "../services/api";
+import { obtenerUsuarioLogueado, logout, actualizarUsuario } from "../services/api";
 import type { Usuario } from "../interfaces/tipos";
 import SelectorFotoPerfil from "./SelectorFotoPerfil";
+import { useNavigate } from "react-router";
+
 
 const EditarPerfil = () => {
+  const navigate = useNavigate();
+
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
@@ -37,7 +41,7 @@ const EditarPerfil = () => {
       setError("No se puede actualizar: ID de usuario no disponible.");
       return;
     }
-  
+
     try {
       await actualizarUsuario(usuario.id, usuario);
       setMensaje("Perfil actualizado con éxito");
@@ -73,16 +77,16 @@ const EditarPerfil = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          {/* Encabezado */}
+
           <div className="bg-gradient-to-br from-amber-400 to-amber-600 p-6 text-white">
             <h1 className="text-2xl font-bold">Editar Perfil</h1>
             <p className="text-blue-100">Actualiza tu información personal</p>
           </div>
 
-          {/* Formulario */}
+
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Columna izquierda */}
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo*</label>
@@ -126,7 +130,6 @@ const EditarPerfil = () => {
                 </div>
               </div>
 
-              {/* Columna derecha */}
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad local</label>
@@ -162,25 +165,19 @@ const EditarPerfil = () => {
               </div>
             </div>
 
-            {/* Selector de foto de perfil */}
+
             <div className="border-t border-gray-200 pt-6">
               <label className="block text-sm font-medium text-gray-700 mb-3">Foto de perfil</label>
               <div className="flex items-center space-x-6">
                 <div className="relative">
-                  <img 
-                    src={usuario.fotoPerfil || 'https://via.placeholder.com/150'} 
-                    alt="Foto actual" 
-                    className="w-20 h-20 rounded-full object-cover border-4 border-indigo-100 shadow"
-                  />
-                  <div className="absolute bottom-0 right-0 w-5 h-5 bg-green-400 rounded-full border-2 border-white"></div>
                 </div>
-                <SelectorFotoPerfil 
-                  onSeleccionar={(url) => setUsuario({...usuario, fotoPerfil: url})} 
+                <SelectorFotoPerfil
+                  onSeleccionar={(url) => setUsuario({ ...usuario, fotoPerfil: url })}
                 />
               </div>
             </div>
 
-            {/* Mensajes y botones */}
+
             <div className="pt-6 space-y-4">
               {mensaje && (
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -202,17 +199,29 @@ const EditarPerfil = () => {
                   Cancelar
                 </button>
                 <button
-                  type="submit"
-                  className="px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-                >
-                  Guardar cambios
-                </button>
-              </div>
+  type="submit"
+  onClick={async (e) => {
+    e.preventDefault(); 
+    
+    try {
+      await handleSubmit(e);
+      await logout();       
+      navigate("/"); 
+    } catch (error) {
+      console.error("Error:", error);
+
+    }
+  }}
+  className="px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+>
+  Guardar cambios y cerrar sesión
+</button>
             </div>
-          </form>
         </div>
-      </div>
+      </form>
     </div>
+      </div >
+    </div >
   );
 };
 

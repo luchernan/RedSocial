@@ -64,7 +64,7 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
 
   return (
     <div className="max-w-9xl font-rounded-black mx-auto px-4 py-8">
-      {/* Botón para mostrar filtros */}
+
       {!mostrarFiltros && (
         <div className="flex  justify-baseline mb-6">
           <button
@@ -76,12 +76,12 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
         </div>
       )}
 
-      {/* Formulario de filtros */}
+    
       {mostrarFiltros && (
   <div className="bg-white rounded-xl shadow-lg p-4 mb-8 animate-fadeIn border border-gray-100">
     <form onSubmit={(e) => { e.preventDefault(); filtrarViajes(); }}>
       <div className="flex flex-wrap items-end gap-4">
-        {/* Género */}
+     
         <div className="flex-1 min-w-[180px]">
           <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Género</label>
           <select
@@ -96,7 +96,7 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
           </select>
         </div>
 
-        {/* Edad */}
+
         <div className="flex-1 min-w-[180px]">
           <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Edad</label>
           <div className="flex gap-2">
@@ -117,7 +117,7 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
           </div>
         </div>
 
-        {/* Idioma */}
+   
         <div className="flex-1 min-w-[180px]">
           <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Idioma</label>
           <select
@@ -133,7 +133,7 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
           </select>
         </div>
 
-        {/* Fechas */}
+      
         <div className="flex-1 min-w-[180px]">
           <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Fecha Inicio</label>
           <input
@@ -153,23 +153,12 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
             className="w-full p-2.5 border border-gray-200 rounded-lg bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all shadow-sm"
           />
         </div>
-
-        {/* Botón (opcional si quieres mantenerlo en línea) */}
-        {/* <button
-          type="submit"
-          className="px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow hover:from-blue-600 hover:to-blue-700 transition-all flex items-center gap-2 h-[42px]"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
-          </svg>
-          <span className="text-sm">Filtrar</span>
-        </button> */}
       </div>
     </form>
   </div>
 )}
 
-      {/* Resultados */}
+   
       <div className="bg-gradient-to-br from-amber-300 to-amber-500 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-amber-600/40">
         <div className="p-6 border-b border-white/40 backdrop-blur-sm">
           <h2 className="text-2xl font-bold text-white drop-shadow-md">

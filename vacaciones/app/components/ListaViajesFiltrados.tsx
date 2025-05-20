@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 
 type Props = {
   viajes: Viaje[];
-  onRefresh?: () => void; // opcional: para recargar en padre
+  onRefresh?: () => void;
 };
 
 const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
@@ -18,7 +18,7 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
   const [loaded, setLoaded] = useState(false);
   const [eliminandoId, setEliminandoId] = useState<number | null>(null);
 
-  // Carga usuario logueado
+
   useEffect(() => {
     obtenerUsuarioLogueado()
       .then(setUsuario)
@@ -31,7 +31,6 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
     setEliminandoId(viajeId);
     try {
       await deleteViajeById(viajeId);
-      // recarga en este componente o en el padre
       onRefresh?.();
     } catch (err) {
       console.error("Error al eliminar viaje:", err);
@@ -62,7 +61,7 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
               key={viaje.id}
               className="group bg-white text-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 overflow-hidden"
             >
-              {/* Header con fechas */}
+
               <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-4 text-white">
                 <p className="text-sm font-medium">
                   <span className="font-semibold">Viaje:</span> {viaje.fechaInicio} -{" "}
@@ -70,9 +69,9 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
                 </p>
               </div>
 
-              {/* Contenido */}
+
               <div className="p-5 space-y-4">
-                {/* Usuario creador */}
+
                 <div className="flex items-center gap-4">
                   <img
                     src={viaje.usuario.fotoPerfil}
@@ -85,16 +84,22 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
                   />
                   <div>
                     <h3 className="text-xl font-bold">{viaje.usuario.nombre}</h3>
-                    <p className="text-sm text-gray-500">{viaje.usuario.idioma}</p>
+
+                    <div className="flex">
+                      <p className="text-sm text-gray-500">{viaje.usuario.idioma}, </p>
+                      <p className="text-sm text-gray-500">{viaje.usuario.edad}</p>
+                    </div>
+
+
                   </div>
                 </div>
 
-     
+
                 <ComentariosViaje viajeId={viaje.id} />
                 <CrearComentario viajeId={viaje.id} usuario={usuario} />
 
                 <div className="flex justify-between items-center mt-4">
-                 
+
 
                   {viaje.usuarioId === usuario.id && (
                     <button

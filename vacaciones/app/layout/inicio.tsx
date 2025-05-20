@@ -67,6 +67,12 @@ function Inicio() {
             Mis Viajes
           </button>
         )}
+          <button
+            onClick={() => navigate("/contacto")}
+            className="text-white hover:underline focus:outline-none"
+          >
+            Contacto
+          </button>
 
             <HeaderUsuario />
             <Logout />

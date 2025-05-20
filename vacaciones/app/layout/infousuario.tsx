@@ -9,7 +9,7 @@ import Header from "~/components/Header";
 const Infousuario = () => {
 
 return (
-<div>
+<div className="bg-gradient-to-r from-blue-300 to-amber-200">
 
  <Header></Header>
 <UsuarioLogueado />

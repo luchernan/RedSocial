@@ -12,7 +12,11 @@ export default function Home() {
 
 
     <Outlet /> 
+
+  
+
     <Footer></Footer>
+
   
 </div>
 );

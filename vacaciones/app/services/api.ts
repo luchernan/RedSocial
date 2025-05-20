@@ -1,10 +1,39 @@
 import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Comentario, Fotoperfil,CrearComentarioDTO, Viaje } from "../interfaces/tipos";
 
 
-const authHeader = 'Basic ' + btoa('user:7a46f0be-2b86-41e3-9635-431c60e99e7a');
+const authHeader = 'Basic ' + btoa('lucas:lucas');
 
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
+
+
+
+
+
+// Para subir fichero multipart
+export async function uploadProfilePhoto(file: File): Promise<void> {
+  const form = new FormData();
+  form.append("file", file);
+  const res = await fetch("http://localhost:8586/viajes/me/foto", {
+    method: "POST",
+    credentials: "include",
+    body: form,
+  });
+  if (!res.ok) throw new Error("Error subiendo foto");
+}
+
+// Para guardar directamente una URL
+export async function setProfilePhotoUrl(url: string): Promise<void> {
+  const res = await fetch("http://localhost:8586/usuarios/me/foto-url", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ url }),
+  });
+  if (!res.ok) throw new Error("Error guardando URL");
+}
 
 /**
  * Elimina un viaje por su ID.
