@@ -49,7 +49,7 @@ const ListaViajes: React.FC<ListaViajesProps> = ({ destino, onViajesCargados }) 
               key={viaje.id}
               className="group bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:-translate-y-2 border border-gray-700 hover:border-purple-500"
             >
-              {/* Encabezado con destino */}
+             
               <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-5">
                 <h2 className="text-2xl font-bold text-white text-center truncate">{destino.nombre}</h2>
                 <p className="text-sm text-blue-100 text-center mt-1">
@@ -57,9 +57,9 @@ const ListaViajes: React.FC<ListaViajesProps> = ({ destino, onViajesCargados }) 
                 </p>
               </div>
 
-              {/* Cuerpo de la tarjeta */}
+             
               <div className="p-6">
-                {/* Sección de usuario */}
+               
                 <div className="flex items-start gap-5">
                   <div className="relative">
                     <img
@@ -86,13 +86,13 @@ const ListaViajes: React.FC<ListaViajesProps> = ({ destino, onViajesCargados }) 
                   </div>
                 </div>
 
-                {/* Descripción */}
+          
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed line-clamp-3">{viaje.usuario.descripcion}</p>
 
-                {/* Comentarios */}
+                
                 <CrearComentario viajeId={viaje.id!} usuario={usuario} />
 
-                {/* Detalles adicionales */}
+               
                 <div className="mt-5 pt-4 border-t border-gray-700">
                   <div className="flex justify-between text-xs text-gray-400">
                     <span>ID Viaje:</span>
@@ -101,7 +101,7 @@ const ListaViajes: React.FC<ListaViajesProps> = ({ destino, onViajesCargados }) 
                 </div>
               </div>
 
-              {/* Pie de tarjeta con acción */}
+             
               <div className="px-6 pb-6">
                 <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-300 transform group-hover:scale-[1.02]">
                   Unirse al viaje

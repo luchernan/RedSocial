@@ -91,10 +91,12 @@ const MisViajes: React.FC = () => {
 
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     {misViajes.map((viaje) => {
-      const duracionDias = Math.round(
-        (new Date(viaje.fechaFin).getTime() - new Date(viaje.fechaInicio).getTime()) / 
-        (1000 * 60 * 60 * 24)
-      );
+      
+      const hoy = new Date();
+      const fechaInicio = new Date(viaje.fechaInicio);
+      const diferenciaMs = fechaInicio.getTime() - hoy.getTime();
+      const diasHastaInicio = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+      
 
       return (
         <div
@@ -120,11 +122,10 @@ const MisViajes: React.FC = () => {
               style={{ backgroundImage: `url(${(viaje as any).imagenPexels})` }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
-            
-            {/* Badge de duración */}
+       
             <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
               <span className="text-sm font-medium text-gray-800 flex items-center">
-                {duracionDias} días
+                {diasHastaInicio} días
                 <svg className="w-4 ms-1 h-4 mr-1 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
@@ -133,7 +134,7 @@ const MisViajes: React.FC = () => {
             </div>
           </div>
 
-          {/* Contenido */}
+       
           <div className="p-6">
             <div className="mb-4">
               <h3 className="text-xl font-bold text-gray-800 mb-1">{viaje.destino.nombre}</h3>

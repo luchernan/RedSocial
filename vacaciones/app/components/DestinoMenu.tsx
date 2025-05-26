@@ -33,7 +33,7 @@ const DestinoMenu: React.FC = () => {
 
   return (
     <div className="flex">
-      {/* Menú lateral */}
+ 
       <aside className="w-1/4 bg-gray-100 p-4 border-r">
         <h2 className="text-xl font-bold mb-4">Destinos</h2>
         <ul>
@@ -49,7 +49,7 @@ const DestinoMenu: React.FC = () => {
         </ul>
       </aside>
 
-      {/* Contenido principal */}
+     
       <main className="w-3/4 p-6">
         {loading && <p>Cargando destino...</p>}
         {destinoSeleccionado ? (

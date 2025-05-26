@@ -27,7 +27,7 @@ const CrearViaje: React.FC<CrearViajeProps> = ({ destino }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!usuarioId || !destino) return alert("Faltan datos");
-
+  
     try {
       await crearViaje({
         usuarioId,
@@ -35,14 +35,12 @@ const CrearViaje: React.FC<CrearViajeProps> = ({ destino }) => {
         fechaInicio,
         fechaFin,
       });
-      alert("Viaje creado con éxito");
-      setMostrarFormulario(false);
-      setFechaInicio("");
-      setFechaFin("");
+      
+      window.location.reload(); 
     } catch {
-      alert("Error al crear viaje");
     }
   };
+  
 
   return (
     <div className=" max-w-md mx-auto mt-8  rounded-xl  text-gray-800">

@@ -6,7 +6,7 @@ export interface WikipediaThumbnail {
   export interface WikipediaSummary {
     title: string;
     extract: string;
-    image?: string; // Imagen de Pexels (o fallback)
+    image?: string; 
   }
 
   export interface Destino {
@@ -25,6 +25,7 @@ export interface WikipediaThumbnail {
     nombre: string;
     genero: 'hombre' | 'mujer' | 'otro';
     descripcion: string;
+    instagram: string;
     tipoUsuario: 'local' | 'viajero';
     idioma: string;
     pais: 'España';
@@ -71,10 +72,10 @@ export interface WikipediaThumbnail {
 
   export interface Mensaje {
     id: number;
-    remitente: Usuario; // Asumimos que la interfaz Usuario ya está definida
+    remitente: Usuario; 
     destinatario: Usuario;
     contenido: string;
-    fechaEnvio: string; // Podría ser un string que represente un datetime ISO 8601
+    fechaEnvio: string; 
     leido: boolean;
   }
   

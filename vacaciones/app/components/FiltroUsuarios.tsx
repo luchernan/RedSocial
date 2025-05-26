@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import type { Usuario } from "../interfaces/tipos"; // Importamos la interfaz
-import { obtenerUsuariosFiltrados } from '../services/api'; // Importamos el método de la API
+import type { Usuario } from "../interfaces/tipos"; 
+import { obtenerUsuariosFiltrados } from '../services/api'; 
 
 const FiltroUsuario = () => {
   const [genero, setGenero] = useState<string | undefined>(undefined);
@@ -9,7 +9,7 @@ const FiltroUsuario = () => {
   const [idioma, setIdioma] = useState<string | undefined>(undefined);
   const [usuariosFiltrados, setUsuariosFiltrados] = useState<Usuario[]>([]);
 
-  // Llamada a la API para obtener los usuarios filtrados
+
   const fetchUsuariosFiltrados = async () => {
     const usuarios = await obtenerUsuariosFiltrados(genero, edadMinima, edadMaxima, idioma);
     console.log("Usuarios desde la API:", usuarios);
@@ -20,7 +20,7 @@ const FiltroUsuario = () => {
     <div>
       <h1 className="text-2xl font-bold text-center mt-4">Filtrar Usuarios</h1>
 
-      {/* Formulario de filtro */}
+    
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -83,7 +83,7 @@ const FiltroUsuario = () => {
         </button>
       </form>
 
-      {/* Mostrar los usuarios filtrados */}
+  
       <div className="mt-8">
         <h3 className="text-lg font-medium">Usuarios Filtrados:</h3>
         <ul className="space-y-4 mt-4">

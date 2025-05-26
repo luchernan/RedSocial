@@ -15,6 +15,7 @@ const UsuarioForm = () => {
     nombre: "",
     genero: "otro",
     descripcion: "",
+    instagram: "",
     tipoUsuario: "local",
     idioma: "",
     pais: "España",
@@ -67,7 +68,7 @@ const UsuarioForm = () => {
           
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Columna izquierda */}
+            
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-rounded-black font-medium text-gray-700 mb-1">Email*</label>
@@ -115,6 +116,17 @@ const UsuarioForm = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                   />
                 </div>
+                <div>
+                  <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Instagram (sin @)</label>
+                  <input
+                    type="text"
+                    name="instagram"
+                    required
+                    value={usuario.instagram}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
+                  />
+                </div>
 
                 <div>
                   <label className="block font-rounded-black text-sm font-medium text-gray-700 mb-1">Género</label>
@@ -131,7 +143,7 @@ const UsuarioForm = () => {
                 </div>
               </div>
 
-              {/* Columna derecha */}
+          
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de usuario</label>

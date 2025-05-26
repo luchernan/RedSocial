@@ -29,12 +29,13 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
   const handleDelete = async (viajeId: number) => {
     if (!window.confirm("¿Seguro que quieres eliminar este viaje?")) return;
     setEliminandoId(viajeId);
+    window.location.reload(); 
     try {
       await deleteViajeById(viajeId);
       onRefresh?.();
     } catch (err) {
       console.error("Error al eliminar viaje:", err);
-      alert("No se pudo eliminar el viaje.");
+      
     } finally {
       setEliminandoId(null);
     }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { obtenerUsuarioLogueado } from "../services/api"; // ajusta la ruta si es distinta
+import { obtenerUsuarioLogueado } from "../services/api";
 import type { Usuario } from "../interfaces/tipos";
 import Logout from "./Logout";
 

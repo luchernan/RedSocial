@@ -4,7 +4,7 @@ import HeaderUsuario from "~/components/HeaderUsuario";
 import Logout from "~/components/Logout";
 import React, { useState, useEffect } from "react";
 import DestinoCard from "../components/DestinoCard";
-import { getDestinoById, obtenerUsuarioLogueado } from "../services/api";
+import { getDestinoById, obtenerUsuarioLogueado, getImagenPexels } from "../services/api";
 import { useLoaderData, useOutletContext } from "react-router";
 import { useNavigate } from "react-router";
 import type { Destino, Viaje } from "../interfaces/tipos";
@@ -20,6 +20,39 @@ function Inicio() {
   const [tieneSesion, setTieneSesion] = useState<boolean>(false);
   const [aleatorios, setAleatorios] = useState<Destino[]>([]);
   const navigate = useNavigate();
+  const [destinos, setDestinos] = useState<Destino[]>([]);
+  const [imagenes, setImagenes] = useState<(string | null)[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const cargarDestinos = async () => {
+      try {
+        const ids = [44, 2, 50];
+        const destinosData = await Promise.all(ids.map(id => getDestinoById(id)));
+
+        const imagenesData = await Promise.all(
+          destinosData.map(destino =>
+            getImagenPexels(destino.nombre).then(imagen =>
+              imagen && imagen.trim() !== "" ? imagen : null
+            )
+          )
+        );
+
+        setDestinos(destinosData);
+        setImagenes(imagenesData);
+      } catch (err) {
+        setError("Error al cargar los destinos");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarDestinos();
+  }, []);
+
+
   useEffect(() => {
     async function checkSession() {
       try {
@@ -38,11 +71,12 @@ function Inicio() {
       ids.add(Math.floor(Math.random() * 92) + 1);
     }
 
-
     Promise.all(Array.from(ids).map((id) => getDestinoById(id)))
       .then(setAleatorios)
       .catch(console.error);
   }, []);
+
+
 
   return (
     <div className=" bg-gradient-to-r from-blue-300 to-amber-200">
@@ -58,21 +92,21 @@ function Inicio() {
             </h1>
           </Link>
           <div className="flex items-center gap-4">
-        
-          {tieneSesion && (
-          <button
-            onClick={() => navigate("/misviajes")}
-            className="text-white hover:underline focus:outline-none"
-          >
-            Mis Viajes
-          </button>
-        )}
-          <button
-            onClick={() => navigate("/contacto")}
-            className="text-white hover:underline focus:outline-none"
-          >
-            Contacto
-          </button>
+
+            {tieneSesion && (
+              <button
+                onClick={() => navigate("/misviajes")}
+                className="text-white hover:underline focus:outline-none"
+              >
+                Mis Viajes
+              </button>
+            )}
+            <button
+              onClick={() => navigate("/contacto")}
+              className="text-white hover:underline focus:outline-none"
+            >
+              Contacto
+            </button>
 
             <HeaderUsuario />
             <Logout />
@@ -95,10 +129,61 @@ function Inicio() {
 
 
       <section className="container mx-auto px-4 py-16 md:py-20 lg:py-24">
-        <div className="text-center mb-12">
+
+
+        <div className="destinos-container  px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Destinos <span className="text-amber-600">Destacados</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto"></div>
+          </div>
+
+          <div className="max-w-7xl bg-gradient-to-r from-blue-200 to-blue-300 rounded-3xl p-6 mx-auto space-y-24">
+            {destinos.map((destino, index) => (
+              <div
+                key={destino.id}
+                onClick={() => navigate(`/destinodetalle/${destino.id}`)}
+                className={`flex flex-col md:flex-row ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''
+                  } items-center gap-8`}
+              >
+                <div className="flex-1">
+                  {imagenes[index] ? (
+                    <img
+                      src={imagenes[index]}
+                      alt={destino.nombre}
+                      className="w-full h-80 md:h-96 object-cover rounded-xl shadow-xl"
+                    />
+                  ) : (
+                    <div className="w-full h-80 md:h-96 bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center rounded-xl shadow-xl">
+                      <span className="text-gray-400 text-lg">Imagen no disponible</span>
+                    </div>
+                  )}
+                </div>
+                <div className={`flex-1 bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/95 ${index % 2 === 0 ? 'hover:-translate-x-1' : 'hover:translate-x-1'}`}>
+                  <div className="relative z-10">
+                    <h3 className="text-3xl font-bold text-gray-900 mb-5 bg-gradient-to-r from-amber-600 to-amber-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-400 bg-clip-text text-transparent">
+                      {destino.nombre}
+                    </h3>
+                    <p className="text-gray-700/90 leading-relaxed text-lg font-normal tracking-wide mb-6 relative 
+   before:content-[''] before:absolute before:-left-4 before:top-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-amber-400 before:to-amber-600 before:rounded-full
+   hover:translate-x-2 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
+   group-hover:text-gray-800 group-hover:font-medium
+   after:content-[''] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-500 hover:after:w-full">
+                      <span className="relative inline-block py-1 px-2 -mx-2 hover:bg-amber-50/50 hover:rounded-lg transition-colors">
+                        {destino.descripcion}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="text-center py-12 mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
             ¿No sabes a dónde ir?
-            <span className="block w-16 h-1 bg-amber-500 mx-auto mt-4"></span>
+            <span className="block w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mt-4"></span>
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
             Descubre destinos increíbles seleccionados especialmente para ti
@@ -146,6 +231,7 @@ function Inicio() {
           </button>
 
         </div>
+
       </section>
 
 

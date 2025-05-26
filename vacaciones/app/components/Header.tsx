@@ -10,7 +10,7 @@ function Header() {
   const navigate = useNavigate();
   const match = useMatch("/destinodetalle/:destinoId");
 
-  // Comprobar sesión al montar
+
   useEffect(() => {
     async function checkSession() {
       try {

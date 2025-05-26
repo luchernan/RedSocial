@@ -15,25 +15,24 @@ const CrearComentario: React.FC<Props> = ({ viajeId, usuario }) => {
 
   const handleEnviarComentario = async () => {
     if (!comentario.trim() || !usuario?.id || !viajeId) return;
-
+  
     try {
       setEnviando(true);
-
+  
       await crearComentario({
         contenido: comentario,
         usuarioId: usuario.id,
         viajeId: viajeId,
       });
-
-      setComentario("");
-      setEnviado(true);
-      setTimeout(() => setEnviado(false), 2000);
+  
+      window.location.reload();
     } catch (error) {
       console.error("Error al enviar comentario:", error);
     } finally {
       setEnviando(false);
     }
   };
+  
 
   return (
     <div className="mt-4">

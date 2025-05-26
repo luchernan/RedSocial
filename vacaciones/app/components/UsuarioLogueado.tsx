@@ -1,6 +1,6 @@
 
-import { obtenerUsuarioLogueado } from "../services/api"; // Importamos el método
-import type { Usuario } from "../interfaces/tipos"; // Asegúrate de importar la interfaz Usuario
+import { obtenerUsuarioLogueado } from "../services/api"; 
+import type { Usuario } from "../interfaces/tipos"; 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -49,7 +49,7 @@ const UsuarioLogueado = () => {
     <div className="max-w-4xl mx-auto  p-6">
       {usuario ? (
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-          {/* Header con foto y datos principales */}
+
           <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
               <div className="relative">
@@ -72,7 +72,7 @@ const UsuarioLogueado = () => {
             </div>
           </div>
 
-          {/* Detalles del usuario */}
+    
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg">
@@ -96,7 +96,8 @@ const UsuarioLogueado = () => {
               {usuario.descripcion && (
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Sobre mí</h3>
-                  <p className="text-gray-700 italic">"{usuario.descripcion}"</p>
+                  <p className="text-gray-700 italic">"{usuario.descripcion}"</p> <br />
+                  <p className="text-gray-700 italic">@{usuario.instagram}</p>
                 </div>
               )}
             </div>
