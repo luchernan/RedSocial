@@ -44,7 +44,7 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
   if (!loaded) return <p>Cargando usuario…</p>;
   if (!usuario) return <div className="flex justify-center">
   <button 
-    onClick={() => navigate('/login')} 
+    onClick={() => navigate('/')} 
     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
   >
     Iniciar sesión
