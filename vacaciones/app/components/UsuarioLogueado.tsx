@@ -27,7 +27,7 @@ const UsuarioLogueado = () => {
     obtenerDatosUsuario();
   }, []);
 
-  
+
   if (cargando) {
     return (
       <div className="flex justify-center  items-center p-8">
@@ -85,11 +85,11 @@ const UsuarioLogueado = () => {
                   <li className="flex justify-between">
                     <span className="text-gray-600">Ciudad:</span>
                     <span className="font-medium text-gray-900">{usuario.ciudadLocal}</span>
-                  </li>
-                  <li className="flex justify-between">
+                  </li> <br />
+                  {/* <li className="flex justify-between">
                     <span className="text-gray-600">Nacimiento: </span>
                     <span className="font-medium text-gray-900">  {usuario.fechaNacimiento}</span>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
 

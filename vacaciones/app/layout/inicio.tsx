@@ -146,27 +146,27 @@ function Inicio() {
      {tieneSesion && (
        <button
          onClick={() => navigate("/misviajes")}
-         className="w-full py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+         className="w-full py-3 text-white font-medium bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
        >
          Mis Viajes
        </button>
      )}
      <button
        onClick={() => navigate("/contacto")}
-       className="w-full py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+       className="w-full py-3 text-white font-medium bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
      >
        Contacto
      </button>
      <button
        onClick={() => navigate("/alldestinos")}
-       className="w-full py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+       className="w-full py-3 text-white font-medium bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
      >
        Todos los destinos
      </button>
      <div className="w-full mt-2">
        <HeaderUsuario />
      </div>
-     <div className="w-full">
+     <div className="w-full flex justify-center">
        <Logout />
      </div>
    </div>
