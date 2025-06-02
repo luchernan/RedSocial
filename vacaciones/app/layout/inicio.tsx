@@ -1,39 +1,45 @@
-
 import ListaViajes from "~/components/ListaViajes";
 import HeaderUsuario from "~/components/HeaderUsuario";
 import Logout from "~/components/Logout";
 import React, { useState, useEffect } from "react";
 import DestinoCard from "../components/DestinoCard";
-import { getDestinoById, obtenerUsuarioLogueado, getImagenPexels } from "../services/api";
-import { useLoaderData, useOutletContext } from "react-router";
+import {
+  getDestinoById,
+  obtenerUsuarioLogueado,
+  getImagenPexels,
+} from "../services/api";
 import { useNavigate } from "react-router";
 import type { Destino, Viaje } from "../interfaces/tipos";
 import CrearViaje from "~/components/CrearViaje";
 import DestinoSearchBar from "~/components/DestinoSearchBar";
 import FiltroViajesPorUsuario from "~/components/FiltroViajesPorUsuario";
-import bg from '../media/fondo2.jpg';
+import bg from "../media/fondo2.jpg";
 import { Link, Navigate } from "react-router";
 
 function Inicio() {
-  const [destinoSeleccionado, setDestinoSeleccionado] = useState<Destino | null>(null);
+  const [destinoSeleccionado, setDestinoSeleccionado] =
+    useState<Destino | null>(null);
   const [viajesDestino, setViajesDestino] = useState<Viaje[]>([]);
   const [tieneSesion, setTieneSesion] = useState<boolean>(false);
   const [aleatorios, setAleatorios] = useState<Destino[]>([]);
-  const navigate = useNavigate();
   const [destinos, setDestinos] = useState<Destino[]>([]);
   const [imagenes, setImagenes] = useState<(string | null)[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const cargarDestinos = async () => {
       try {
-        const ids = [44, 2, 50];
-        const destinosData = await Promise.all(ids.map(id => getDestinoById(id)));
+        const ids = [44, 18, 50];
+        const destinosData = await Promise.all(
+          ids.map((id) => getDestinoById(id))
+        );
 
         const imagenesData = await Promise.all(
-          destinosData.map(destino =>
-            getImagenPexels(destino.nombre).then(imagen =>
+          destinosData.map((destino) =>
+            getImagenPexels(destino.nombre).then((imagen) =>
               imagen && imagen.trim() !== "" ? imagen : null
             )
           )
@@ -51,7 +57,6 @@ function Inicio() {
 
     cargarDestinos();
   }, []);
-
 
   useEffect(() => {
     async function checkSession() {
@@ -76,43 +81,96 @@ function Inicio() {
       .catch(console.error);
   }, []);
 
-
-
   return (
-    <div className=" bg-gradient-to-r from-blue-300 to-amber-200">
+    <div className="bg-gradient-to-r from-blue-300 to-amber-200">
       <div
         className="bg-cover bg-center bg-no-repeat h-170"
         style={{ backgroundImage: `url(${bg})` }}
       >
-
-        <div className="flex items-center justify-between px-15 py-5">
+        <div className="flex items-center justify-between px-5 py-5">
           <Link to="/inicio">
-            <h1 className="text-4xl transform hover:scale-105 font-rounded-black font-black text-gray-900">
+            <h1 className="text-4xl font-rounded-black font-black text-gray-900">
               PalTrip
             </h1>
           </Link>
-          <div className="flex items-center gap-4">
 
+          <div className="md:hidden">
+            <button
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              className="text-white"
+            >
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="hidden md:flex items-center gap-4">
             {tieneSesion && (
               <button
                 onClick={() => navigate("/misviajes")}
-                className="text-white hover:underline focus:outline-none"
+                className="text-white hover:underline"
               >
                 Mis Viajes
               </button>
             )}
             <button
               onClick={() => navigate("/contacto")}
-              className="text-white hover:underline focus:outline-none"
+              className="text-white hover:underline"
             >
               Contacto
             </button>
-
+            <button
+              onClick={() => navigate("/alldestinos")}
+              className="text-white hover:underline"
+            >
+              Todos los Destinos
+            </button>
             <HeaderUsuario />
             <Logout />
           </div>
         </div>
 
+        {menuAbierto && (
+     <div className="md:hidden flex flex-col items-center px-5 py-6 gap-5 bg-gradient-to-br from-blue-400 to-blue-500 p-6 rounded-xl shadow-lg mx-4 mt-3 w-[90%] max-w-xs mx-auto">
+     {tieneSesion && (
+       <button
+         onClick={() => navigate("/misviajes")}
+         className="w-full py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+       >
+         Mis Viajes
+       </button>
+     )}
+     <button
+       onClick={() => navigate("/contacto")}
+       className="w-full py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+     >
+       Contacto
+     </button>
+     <button
+       onClick={() => navigate("/alldestinos")}
+       className="w-full py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+     >
+       Todos los destinos
+     </button>
+     <div className="w-full mt-2">
+       <HeaderUsuario />
+     </div>
+     <div className="w-full">
+       <Logout />
+     </div>
+   </div>
+        )}
 
         <h1 className="text-center mt-15 mb-10 text-6xl font-rounded-black font-black text-white-900">
           ¿En qué ciudad quieres <br /> encontrar nuevos amigos?
@@ -121,16 +179,19 @@ function Inicio() {
 
         {destinoSeleccionado && (
           <>
-            <ListaViajes destino={destinoSeleccionado} onViajesCargados={setViajesDestino} />
+          <div className="none">
+          <ListaViajes
+              destino={destinoSeleccionado}
+              onViajesCargados={setViajesDestino}
+            />
             <CrearViaje destino={destinoSeleccionado} />
+          </div>
+           
           </>
         )}
       </div>
 
-
       <section className="container mx-auto px-4 py-16 md:py-20 lg:py-24">
-
-
         <div className="destinos-container  px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -144,8 +205,9 @@ function Inicio() {
               <div
                 key={destino.id}
                 onClick={() => navigate(`/destinodetalle/${destino.id}`)}
-                className={`flex flex-col md:flex-row ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''
-                  } items-center gap-8`}
+                className={`flex flex-col md:flex-row ${
+                  index % 2 !== 0 ? "md:flex-row-reverse" : ""
+                } items-center gap-8`}
               >
                 <div className="flex-1">
                   {imagenes[index] ? (
@@ -156,20 +218,30 @@ function Inicio() {
                     />
                   ) : (
                     <div className="w-full h-80 md:h-96 bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center rounded-xl shadow-xl">
-                      <span className="text-gray-400 text-lg">Imagen no disponible</span>
+                      <span className="text-gray-400 text-lg">
+                        Imagen no disponible
+                      </span>
                     </div>
                   )}
                 </div>
-                <div className={`flex-1 bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/95 ${index % 2 === 0 ? 'hover:-translate-x-1' : 'hover:translate-x-1'}`}>
+                <div
+                  className={`flex-1 bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-white/95 ${
+                    index % 2 === 0
+                      ? "hover:-translate-x-1"
+                      : "hover:translate-x-1"
+                  }`}
+                >
                   <div className="relative z-10">
                     <h3 className="text-3xl font-bold text-gray-900 mb-5 bg-gradient-to-r from-amber-600 to-amber-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-400 bg-clip-text text-transparent">
                       {destino.nombre}
                     </h3>
-                    <p className="text-gray-700/90 leading-relaxed text-lg font-normal tracking-wide mb-6 relative 
+                    <p
+                      className="text-gray-700/90 leading-relaxed text-lg font-normal tracking-wide mb-6 relative 
    before:content-[''] before:absolute before:-left-4 before:top-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-amber-400 before:to-amber-600 before:rounded-full
    hover:translate-x-2 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
    group-hover:text-gray-800 group-hover:font-medium
-   after:content-[''] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-500 hover:after:w-full">
+   after:content-[''] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-500 hover:after:w-full"
+                    >
                       <span className="relative inline-block py-1 px-2 -mx-2 hover:bg-amber-50/50 hover:rounded-lg transition-colors">
                         {destino.descripcion}
                       </span>
@@ -196,10 +268,7 @@ function Inicio() {
               key={dest.id}
               className="transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
-              <DestinoCard
-                destino={dest}
-
-              />
+              <DestinoCard destino={dest} />
             </div>
           ))}
         </div>
@@ -229,12 +298,8 @@ function Inicio() {
               </svg>
             </span>
           </button>
-
         </div>
-
       </section>
-
-
     </div>
   );
 }

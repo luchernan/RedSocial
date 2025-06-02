@@ -32,7 +32,7 @@ const Logout: React.FC = () => {
   return (
     <button
       onClick={handleClick}
-      className="flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium text-white bg-gradient-to-br from-amber-400 to-amber-600 hover:from-blue-400 hover:to-blue-600 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2"
+      className="flex text-center items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium text-white bg-gradient-to-br from-amber-400 to-amber-600 hover:from-blue-400 hover:to-blue-600 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2"
     >
       {tieneSesion ? (
 

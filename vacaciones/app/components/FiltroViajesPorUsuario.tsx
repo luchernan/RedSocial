@@ -23,7 +23,6 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
       genero || edadMinima || edadMaxima || idioma || fechaInicio || fechaFin;
     onFiltroActivoChange(!!hayFiltroActivo);
   }, [genero, edadMinima, edadMaxima, idioma, fechaInicio, fechaFin, viajes]);
-
   const calcularEdad = (fechaNacimiento: string): number => {
     const nacimiento = new Date(fechaNacimiento);
     const hoy = new Date();
@@ -34,31 +33,24 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
     }
     return edad;
   };
-
   const filtrarViajes = () => {
     const inicioFiltro = fechaInicio ? new Date(fechaInicio) : null;
     const finFiltro = fechaFin ? new Date(fechaFin) : null;
-
     const resultado = viajes.filter((viaje) => {
       const usuario = viaje.usuario;
-
       const cumpleGenero = !genero || usuario.genero === genero;
       const cumpleIdioma = !idioma || usuario.idioma === idioma;
       const edadUsuario = calcularEdad(usuario.fechaNacimiento);
       const cumpleEdadMinima = !edadMinima || edadUsuario >= edadMinima;
       const cumpleEdadMaxima = !edadMaxima || edadUsuario <= edadMaxima;
-
       const inicioViaje = new Date(viaje.fechaInicio);
       const finViaje = new Date(viaje.fechaFin);
-
       const cumpleFechas =
         !inicioFiltro || !finFiltro || (
           inicioViaje <= finFiltro && finViaje >= inicioFiltro
         );
-
       return cumpleGenero && cumpleIdioma && cumpleEdadMinima && cumpleEdadMaxima && cumpleFechas;
     });
-
     setViajesFiltrados(resultado);
   };
 
@@ -175,3 +167,4 @@ const FiltroViajesPorUsuario: React.FC<Props> = ({ viajes, onFiltroActivoChange 
 };
 
 export default FiltroViajesPorUsuario;
+

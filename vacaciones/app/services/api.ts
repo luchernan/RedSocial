@@ -1,4 +1,4 @@
-import type { WikipediaSummary,WikipediaThumbnail ,Destino, Usuario, Comentario, Fotoperfil,CrearComentarioDTO, Viaje } from "../interfaces/tipos";
+import type { Destino, Usuario, Comentario, Fotoperfil,CrearComentarioDTO, Viaje } from "../interfaces/tipos";
 
 
 const authHeader = 'Basic ' + btoa('lucas:lucas');
@@ -7,38 +7,23 @@ const authHeader = 'Basic ' + btoa('lucas:lucas');
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
 
 
+/*
+*
+* Viajes
+*
+* */
 
+//Todos los viajes por Destino seleccionado
+export const getViajesPorDestino = async (destinoId: number): Promise<Viaje[]> => {
+  const res = await fetch(`http://localhost:8586/viajes/destino/${destinoId}`);
+  if (!res.ok) {
+    throw new Error("Error al obtener viajes");
+  }
+  return await res.json();
+};
 
+ // Elimina un viaje por su ID.
 
-// Para subir fichero multipart
-export async function uploadProfilePhoto(file: File): Promise<void> {
-  const form = new FormData();
-  form.append("file", file);
-  const res = await fetch("http://localhost:8586/viajes/me/foto", {
-    method: "POST",
-    credentials: "include",
-    body: form,
-  });
-  if (!res.ok) throw new Error("Error subiendo foto");
-}
-
-// Para guardar directamente una URL
-export async function setProfilePhotoUrl(url: string): Promise<void> {
-  const res = await fetch("http://localhost:8586/usuarios/me/foto-url", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ url }),
-  });
-  if (!res.ok) throw new Error("Error guardando URL");
-}
-
-/**
- * Elimina un viaje por su ID.
- * Lanza excepción si la operación falla.
- */
 export async function deleteViajeById(viajeId: number): Promise<void> {
   const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
     method: "DELETE",
@@ -50,6 +35,35 @@ export async function deleteViajeById(viajeId: number): Promise<void> {
     throw new Error(`Error al eliminar viaje con ID ${viajeId}`);
   }
 }
+//crear viajes
+export async function crearViaje(viaje: {
+  usuarioId: number;
+  destinoId: number;
+  fechaInicio: string;
+  fechaFin: string;
+}): Promise<any> {
+  try {
+    const response = await fetch("http://localhost:8586/viajes/viajes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(viaje),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al crear el viaje");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creando viaje:", error);
+    throw error;
+  }
+}
+
+//Obtiene todos los viajes que ha creado o comentado un usuario
 export async function getViajesParticipadosIds(usuarioId: number): Promise<number[]> {
   const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/viajes-participados`, {
     headers: {
@@ -61,6 +75,8 @@ export async function getViajesParticipadosIds(usuarioId: number): Promise<numbe
   }
   return res.json(); 
 }
+
+//obtiene viaje por un id
 export async function getViajeById(viajeId: number): Promise<Viaje> {
   const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
     headers: {
@@ -79,22 +95,13 @@ export async function getMisViajesParticipados(usuarioId: number): Promise<Viaje
 }
 
 
+/*
+*
+* Comentarios
+*
+* */
 
 
-export async function getComentariosUsuario(usuarioId: number): Promise<Comentario[]> {
-  const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/comentarios`);
-  if (!res.ok) throw new Error("Error al obtener comentarios de usuario");
-  return res.json();
-}
-
-
-export async function getUsuarioPorId(id: number): Promise<Usuario> {
-  const res = await fetch(`http://localhost:8586/viajes/usuarios/${id}`);
-  if (!res.ok) {
-    throw new Error("Error al obtener usuario");
-  }
-  return await res.json();
-}
 
 
 
@@ -122,8 +129,6 @@ export async function crearComentario(comentario: CrearComentarioDTO): Promise<C
   return await res.json();
 }
 
-
-
 // Eliminar comentario
 export async function eliminarComentario(id: number): Promise<void> {
   const res = await fetch(`http://localhost:8586/viajes/comentarios/${id}`, {
@@ -135,73 +140,86 @@ export async function eliminarComentario(id: number): Promise<void> {
 }
 
 
-export async function obtenerViajesFiltradosPorUsuarios(
-    genero?: string,
-    edadMinima?: number,
-    edadMaxima?: number,
-    idioma?: string
-  ): Promise<Viaje[]> {
-    try {
-      const usuarios = await obtenerUsuariosFiltrados(genero, edadMinima, edadMaxima, idioma);
-  
-      const idsUsuarios = usuarios.map(u => u.id);
-  
-      const response = await fetch("http://localhost:8586/viajes"); // Ajusta si tienes otro endpoint
-  
-      if (!response.ok) {
-        throw new Error("Error al obtener los viajes");
-      }
-  
-      const viajes: Viaje[] = await response.json();
-  
-      return viajes.filter(viaje => idsUsuarios.includes(viaje.usuario.id));
-    } catch (error) {
-      console.error("Error:", error);
-      return [];
-    }
-  }
+export async function getComentariosUsuario(usuarioId: number): Promise<Comentario[]> {
+  const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/comentarios`);
+  if (!res.ok) throw new Error("Error al obtener comentarios de usuario");
+  return res.json();
+}
   
 
+/*
+ *
+* Destinos
+*  
+*/
 
-export const getViajesPorDestino = async (destinoId: number): Promise<Viaje[]> => {
-  const res = await fetch(`http://localhost:8586/viajes/destino/${destinoId}`);
-  if (!res.ok) {
-    throw new Error("Error al obtener viajes");
-  }
-  return await res.json();
-};
+//obtiene destino por Id
+export async function getDestinoById(id: number): Promise<Destino> {
+    const response = await fetch(`http://localhost:8586/viajes/${id}`, {
 
-
-
-
-export async function crearViaje(viaje: {
-    usuarioId: number;
-    destinoId: number;
-    fechaInicio: string;
-    fechaFin: string;
-  }): Promise<any> {
-    try {
-      const response = await fetch("http://localhost:8586/viajes/viajes", {
-        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(viaje),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Error al crear el viaje");
-      }
-  
-      return await response.json();
-    } catch (error) {
-      console.error("Error creando viaje:", error);
-      throw error;
+            Authorization: authHeader
+          }
+        }
+    );
+    if (!response.ok) {
+        throw new Error(`Destino con ID ${id} no encontrado`);
     }
-  }
-  
+    return await response.json();
+}
 
+
+ //Obtener todos los destinos
+ 
+export async function getAllDestinos(): Promise<Destino[]> {
+    const response = await fetch(`http://localhost:8586/viajes`, {
+
+        headers: {
+            Authorization: authHeader
+        }
+        }
+    );
+    if (!response.ok) {
+      throw new Error("Error al obtener los destinos");
+    }
+    return await response.json();
+}
+
+
+
+/*
+ *
+* Usuarios
+*  
+*/
+
+export async function login(email: string, password: string) {
+    const response = await fetch("http://localhost:8586/viajes/login", {
+      method: "POST",
+      credentials: "include", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  
+    if (!response.ok) {
+      throw new Error("Credenciales incorrectas");
+    }
+  
+    return response.json();
+  }
+
+  //obtiene un usuario por su Id
+  export async function getUsuarioPorId(id: number): Promise<Usuario> {
+    const res = await fetch(`http://localhost:8586/viajes/usuarios/${id}`);
+    if (!res.ok) {
+      throw new Error("Error al obtener usuario");
+    }
+    return await res.json();
+  }
+
+  //Se usa al editar un Usuario
   export async function actualizarUsuario(id: number, usuarioActualizado: Partial<Usuario>): Promise<Usuario> {
     try {
       const response = await fetch(`http://localhost:8586/viajes/usuarios/${id}`, {
@@ -223,6 +241,8 @@ export async function crearViaje(viaje: {
     }
   }
 
+
+  //crea un usuario
 export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   try {
     const response = await fetch("http://localhost:8586/viajes/usuarios", {
@@ -244,24 +264,7 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   }
 }
 
-export async function obtenerUsuarioLogueado(): Promise<Usuario> {
-    try {
-      const response = await fetch("http://localhost:8586/viajes/usuario-logueado", {
-        method: "GET",
-        credentials: "include", 
-      });
-  
-      if (!response.ok) {
-        throw new Error("No hay sesión activa o error al obtener el usuario");
-      }
-  
-      return await response.json();
-    } catch (error) {
-      console.error("Error obteniendo el usuario logueado:", error);
-      throw error;
-    }
-  }
-  
+
 
 
 
@@ -300,73 +303,25 @@ export async function obtenerUsuarioLogueado(): Promise<Usuario> {
   
 
 
-
-/**
- * Obtener un destino por ID
-*/
-export async function getDestinoById(id: number): Promise<Destino> {
-    const response = await fetch(`http://localhost:8586/viajes/${id}`, {
-
-        headers: {
-            Authorization: authHeader
-          }
-        }
-    );
-    if (!response.ok) {
-        throw new Error(`Destino con ID ${id} no encontrado`);
-    }
-    return await response.json();
-}
-
-/**
- * Obtener todos los destinos
- */
-export async function getAllDestinos(): Promise<Destino[]> {
-    const response = await fetch(`http://localhost:8586/viajes`, {
-
-        headers: {
-            Authorization: authHeader
-        }
-        }
-    );
-    if (!response.ok) {
-      throw new Error("Error al obtener los destinos");
-    }
-    return await response.json();
-}
-
-
-
-
-
-export async function login(email: string, password: string) {
-    const response = await fetch("http://localhost:8586/viajes/login", {
-      method: "POST",
-      credentials: "include", 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+  // obtiene el usuario activo de la sesión
+  export async function obtenerUsuarioLogueado(): Promise<Usuario> {
+    try {
+      const response = await fetch("http://localhost:8586/viajes/usuario-logueado", {
+        method: "GET",
+        credentials: "include", 
+      });
   
-    if (!response.ok) {
-      throw new Error("Credenciales incorrectas");
-    }
+      if (!response.ok) {
+        throw new Error("No hay sesión activa o error al obtener el usuario");
+      }
   
-    return response.json();
+      return await response.json();
+    } catch (error) {
+      console.error("Error obteniendo el usuario logueado:", error);
+      throw error;
+    }
   }
   
-  export async function getUsuarioLogueado() {
-    const response = await fetch("http://localhost:8586/viajes/usuario-logueado", {
-      credentials: "include",
-    });
-  
-    if (!response.ok) {
-      throw new Error("No hay sesión activa");
-    }
-  
-    return response.json();
-  }
   
   export async function logout() {
     await fetch("http://localhost:8586/viajes/logout", {
@@ -375,6 +330,7 @@ export async function login(email: string, password: string) {
     });
   }
   
+  //obtiene las foto de perfil para crear o editar un usuario
   export async function obtenerFotosPerfil(): Promise<Fotoperfil[]> {
     try {
       const response = await fetch("http://localhost:8586/viajes/fotoperfil");
@@ -390,9 +346,8 @@ export async function login(email: string, password: string) {
 
     
 
+  //imagenes de los destinos
   export async function getImagenPexels(ciudad: string): Promise<string | null> {
-
-  
     try {
       const res = await fetch(
         `https://api.pexels.com/v1/search?query=${encodeURIComponent(ciudad)}&per_page=10`,

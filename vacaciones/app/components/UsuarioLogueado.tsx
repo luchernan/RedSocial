@@ -24,10 +24,10 @@ const UsuarioLogueado = () => {
         setCargando(false);
       }
     };
-
     obtenerDatosUsuario();
   }, []);
 
+  
   if (cargando) {
     return (
       <div className="flex justify-center  items-center p-8">
@@ -87,8 +87,8 @@ const UsuarioLogueado = () => {
                     <span className="font-medium text-gray-900">{usuario.ciudadLocal}</span>
                   </li>
                   <li className="flex justify-between">
-                    <span className="text-gray-600">Nacimiento:</span>
-                    <span className="font-medium text-gray-900">{usuario.fechaNacimiento}</span>
+                    <span className="text-gray-600">Nacimiento: </span>
+                    <span className="font-medium text-gray-900">  {usuario.fechaNacimiento}</span>
                   </li>
                 </ul>
               </div>

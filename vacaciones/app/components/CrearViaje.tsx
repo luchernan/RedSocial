@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { crearViaje, obtenerUsuarioLogueado } from "../services/api";
-import type { Destino } from "../interfaces/tipos"; 
-
+import type { Destino, Usuario } from "../interfaces/tipos"; 
+import { useNavigate } from "react-router";
 interface CrearViajeProps {
   destino: Destino | null;
 }
 
 const CrearViaje: React.FC<CrearViajeProps> = ({ destino }) => {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [loaded, setLoaded] = useState(false);
   const [usuarioId, setUsuarioId] = useState<number | null>(null);
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    obtenerUsuarioLogueado()
+      .then(setUsuario)
+      .catch(() => setUsuario(null))
+      .finally(() => setLoaded(true));
+  }, []);
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -42,6 +51,21 @@ const CrearViaje: React.FC<CrearViajeProps> = ({ destino }) => {
   };
   
 
+
+ if (!usuario) return <div className="bg-white p-4 rounded-lg shadow-md border border-red-100 max-w-md mx-auto my-4">
+ <p className="text-red-500 font-medium text-center">
+   Debes iniciar sesión para acceder a esta función.
+ </p>
+ {/* <div className="flex justify-center mt-3">
+   <button 
+     onClick={() => navigate('/login')} 
+     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+   >
+     Iniciar sesión
+   </button>
+ </div> */}
+</div>;
+ 
   return (
     <div className=" max-w-md mx-auto mt-8  rounded-xl  text-gray-800">
       {!mostrarFormulario ? (

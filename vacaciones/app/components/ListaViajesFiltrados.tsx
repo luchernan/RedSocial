@@ -42,7 +42,14 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
   };
 
   if (!loaded) return <p>Cargando usuario…</p>;
-  if (!usuario) return <p className="text-red-500">Debes iniciar sesión.</p>;
+  if (!usuario) return <div className="flex justify-center">
+  <button 
+    onClick={() => navigate('/login')} 
+    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+  >
+    Iniciar sesión
+  </button>
+</div>
   if (!viajes.length)
     return <p className="text-gray-500">No hay viajes que coincidan con el filtro.</p>;
 
@@ -84,7 +91,11 @@ const ListaViajesFiltrados: React.FC<Props> = ({ viajes, onRefresh }) => {
                     }}
                   />
                   <div>
-                    <h3 className="text-xl font-bold">{viaje.usuario.nombre}</h3>
+                    <h3   onClick={() => {
+                                        
+                                            navigate(`/detalleusuario/${viaje.usuarioId}`);
+                                        
+                                    }} className="text-xl font-bold">{viaje.usuario.nombre}</h3>
 
                     <div className="flex">
                       <p className="text-sm text-gray-500">{viaje.usuario.idioma}, </p>

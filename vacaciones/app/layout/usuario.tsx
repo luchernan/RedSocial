@@ -4,7 +4,7 @@ import type { Usuario, Fotoperfil } from "../interfaces/tipos";
 import { useNavigate } from "react-router";
 import SelectorFotoPerfil from "~/components/SelectorFotoPerfil";
 import Header from "~/components/Header";
-import ProfilePhotoUploader from "~/components/ProfilePhotoUploader";
+
 
 const UsuarioForm = () => {
   const navigate = useNavigate();

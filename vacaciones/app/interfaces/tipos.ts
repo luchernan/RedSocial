@@ -1,13 +1,3 @@
-export interface WikipediaThumbnail {
-    source: string;
-    width: number;
-    height: number;
-  }
-  export interface WikipediaSummary {
-    title: string;
-    extract: string;
-    image?: string; 
-  }
 
   export interface Destino {
     id: number;

@@ -47,7 +47,7 @@ export default function DestinoSearchBar({ onDestinoSeleccionado }: DestinoSearc
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
         placeholder="Buscar destino por nombre..."
-        className="border font-rounded-black bg-amber-50 text-gray-900 border-gray-300 p-3 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+        className="border  bg-amber-50 text-gray-900 border-gray-300 p-3 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
       />
       <button
         type="submit"
