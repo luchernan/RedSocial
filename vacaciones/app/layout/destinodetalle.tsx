@@ -4,7 +4,6 @@ import { getDestinoById, getImagenPexels } from "../services/api";
 import type { Destino, Viaje } from "../interfaces/tipos";
 import ListaViajes from "~/components/ListaViajes";
 import Header from "~/components/Header";
-
 import Logout from "~/components/Logout";
 import { useLoaderData, useOutletContext } from "react-router";
 import CrearViaje from "~/components/CrearViaje";
@@ -12,6 +11,7 @@ import DestinoSearchBar from "~/components/DestinoSearchBar";
 import FiltroViajesPorUsuario from "~/components/FiltroViajesPorUsuario"; 
 import bg from "../media/fondo2.jpg";
 import { Link } from "react-router";
+
 
 export default function DestinoDetalle() {
     const { destinoId } = useParams();
@@ -167,7 +167,6 @@ export default function DestinoDetalle() {
                                     viajes={viajesDestino}
                                     onFiltroActivoChange={setFiltroActivo}
                                 />
-
                             </div>
 
 
@@ -180,11 +179,7 @@ export default function DestinoDetalle() {
                                         onViajesCargados={setViajesDestino}
                                     />
                                 )}
-
-
                             </div>
-
-
                         </>
                     )}
                     <div className="text-center mb-1">

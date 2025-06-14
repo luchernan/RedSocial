@@ -60,12 +60,5 @@
 
 
 
-  export interface Mensaje {
-    id: number;
-    remitente: Usuario; 
-    destinatario: Usuario;
-    contenido: string;
-    fechaEnvio: string; 
-    leido: boolean;
-  }
+
   

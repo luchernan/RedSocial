@@ -6,6 +6,41 @@ const authHeader = 'Basic ' + btoa('lucas:lucas');
 
 const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx";
 
+/*
+ *
+* Destinos
+*  
+*/
+
+//Obtener todos los destinos
+export async function getAllDestinos(): Promise<Destino[]> {
+  const response = await fetch(`http://localhost:8586/viajes`, {
+
+      headers: {
+          Authorization: authHeader
+      }
+      }
+  );
+  if (!response.ok) {
+    throw new Error("Error al obtener los destinos");
+  }
+  return await response.json();
+}
+
+//obtiene destino por Id
+export async function getDestinoById(id: number): Promise<Destino> {
+  const response = await fetch(`http://localhost:8586/viajes/${id}`, {
+
+      headers: {
+          Authorization: authHeader
+        }
+      }
+  );
+  if (!response.ok) {
+      throw new Error(`Destino con ID ${id} no encontrado`);
+  }
+  return await response.json();
+}
 
 /*
 *
@@ -23,7 +58,6 @@ export const getViajesPorDestino = async (destinoId: number): Promise<Viaje[]> =
 };
 
  // Elimina un viaje por su ID.
-
 export async function deleteViajeById(viajeId: number): Promise<void> {
   const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
     method: "DELETE",
@@ -35,6 +69,7 @@ export async function deleteViajeById(viajeId: number): Promise<void> {
     throw new Error(`Error al eliminar viaje con ID ${viajeId}`);
   }
 }
+
 //crear viajes
 export async function crearViaje(viaje: {
   usuarioId: number;
@@ -146,44 +181,6 @@ export async function getComentariosUsuario(usuarioId: number): Promise<Comentar
   return res.json();
 }
   
-
-/*
- *
-* Destinos
-*  
-*/
-
-//obtiene destino por Id
-export async function getDestinoById(id: number): Promise<Destino> {
-    const response = await fetch(`http://localhost:8586/viajes/${id}`, {
-
-        headers: {
-            Authorization: authHeader
-          }
-        }
-    );
-    if (!response.ok) {
-        throw new Error(`Destino con ID ${id} no encontrado`);
-    }
-    return await response.json();
-}
-
-
- //Obtener todos los destinos
- 
-export async function getAllDestinos(): Promise<Destino[]> {
-    const response = await fetch(`http://localhost:8586/viajes`, {
-
-        headers: {
-            Authorization: authHeader
-        }
-        }
-    );
-    if (!response.ok) {
-      throw new Error("Error al obtener los destinos");
-    }
-    return await response.json();
-}
 
 
 
@@ -369,6 +366,4 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
       return null;
     }
   }
-
-
     

@@ -26,6 +26,7 @@ const AllDestinos: React.FC = () => {
   const handleClick = (id: number) => {
     navigate(`/destinodetalle/${id}`);
   };
+  
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-300/90 via-amber-100 to-amber-200/90 pb-12 backdrop-blur-sm">
   <Header />
