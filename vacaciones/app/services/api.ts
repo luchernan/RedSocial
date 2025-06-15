@@ -14,7 +14,7 @@ const PEXELS_API_KEY = "jOM9LGe1Ovq0jBkJ8SFdWUPfsatrFwR4lOdeX80Xq1jt96rXYSFoXdXx
 
 //Obtener todos los destinos
 export async function getAllDestinos(): Promise<Destino[]> {
-  const response = await fetch(`https://proyecto-1-463010.ew.r.appspot.com/viajes`, {
+  const response = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes`, {
 
       headers: {
           Authorization: authHeader
