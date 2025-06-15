@@ -29,7 +29,7 @@ export async function getAllDestinos(): Promise<Destino[]> {
 
 //obtiene destino por Id
 export async function getDestinoById(id: number): Promise<Destino> {
-  const response = await fetch(`http://localhost:8586/viajes/${id}`, {
+  const response = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/${id}`, {
 
       headers: {
           Authorization: authHeader
@@ -50,7 +50,7 @@ export async function getDestinoById(id: number): Promise<Destino> {
 
 //Todos los viajes por Destino seleccionado
 export const getViajesPorDestino = async (destinoId: number): Promise<Viaje[]> => {
-  const res = await fetch(`http://localhost:8586/viajes/destino/${destinoId}`);
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/destino/${destinoId}`);
   if (!res.ok) {
     throw new Error("Error al obtener viajes");
   }
@@ -59,7 +59,7 @@ export const getViajesPorDestino = async (destinoId: number): Promise<Viaje[]> =
 
  // Elimina un viaje por su ID.
 export async function deleteViajeById(viajeId: number): Promise<void> {
-  const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/viajes/${viajeId}`, {
     method: "DELETE",
     headers: {
       Authorization: authHeader,
@@ -78,7 +78,7 @@ export async function crearViaje(viaje: {
   fechaFin: string;
 }): Promise<any> {
   try {
-    const response = await fetch("http://localhost:8586/viajes/viajes", {
+    const response = await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/viajes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export async function crearViaje(viaje: {
 
 //Obtiene todos los viajes que ha creado o comentado un usuario
 export async function getViajesParticipadosIds(usuarioId: number): Promise<number[]> {
-  const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/viajes-participados`, {
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/usuarios/${usuarioId}/viajes-participados`, {
     headers: {
       Authorization: authHeader
     }
@@ -113,7 +113,7 @@ export async function getViajesParticipadosIds(usuarioId: number): Promise<numbe
 
 //obtiene viaje por un id
 export async function getViajeById(viajeId: number): Promise<Viaje> {
-  const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}`, {
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/viajes/${viajeId}`, {
     headers: {
       Authorization: authHeader
     }
@@ -142,7 +142,7 @@ export async function getMisViajesParticipados(usuarioId: number): Promise<Viaje
 
 // Obtener comentarios de un viaje
 export async function getComentariosPorViaje(viajeId: number): Promise<Comentario[]> {
-  const res = await fetch(`http://localhost:8586/viajes/viajes/${viajeId}/comentarios`);
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/viajes/${viajeId}/comentarios`);
   if (!res.ok) {
     throw new Error("Error al obtener comentarios");
   }
@@ -151,7 +151,7 @@ export async function getComentariosPorViaje(viajeId: number): Promise<Comentari
 
 // Crear un nuevo comentario 
 export async function crearComentario(comentario: CrearComentarioDTO): Promise<Comentario> {
-  const res = await fetch(`http://localhost:8586/viajes/comentarios`, {
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/comentarios`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -166,7 +166,7 @@ export async function crearComentario(comentario: CrearComentarioDTO): Promise<C
 
 // Eliminar comentario
 export async function eliminarComentario(id: number): Promise<void> {
-  const res = await fetch(`http://localhost:8586/viajes/comentarios/${id}`, {
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/comentarios/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) {
@@ -176,7 +176,7 @@ export async function eliminarComentario(id: number): Promise<void> {
 
 
 export async function getComentariosUsuario(usuarioId: number): Promise<Comentario[]> {
-  const res = await fetch(`http://localhost:8586/viajes/usuarios/${usuarioId}/comentarios`);
+  const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/usuarios/${usuarioId}/comentarios`);
   if (!res.ok) throw new Error("Error al obtener comentarios de usuario");
   return res.json();
 }
@@ -191,7 +191,7 @@ export async function getComentariosUsuario(usuarioId: number): Promise<Comentar
 */
 
 export async function login(email: string, password: string) {
-    const response = await fetch("http://localhost:8586/viajes/login", {
+    const response = await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/login", {
       method: "POST",
       credentials: "include", 
       headers: {
@@ -209,7 +209,7 @@ export async function login(email: string, password: string) {
 
   //obtiene un usuario por su Id
   export async function getUsuarioPorId(id: number): Promise<Usuario> {
-    const res = await fetch(`http://localhost:8586/viajes/usuarios/${id}`);
+    const res = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/usuarios/${id}`);
     if (!res.ok) {
       throw new Error("Error al obtener usuario");
     }
@@ -219,7 +219,7 @@ export async function login(email: string, password: string) {
   //Se usa al editar un Usuario
   export async function actualizarUsuario(id: number, usuarioActualizado: Partial<Usuario>): Promise<Usuario> {
     try {
-      const response = await fetch(`http://localhost:8586/viajes/usuarios/${id}`, {
+      const response = await fetch(`https://tfg-vacaciones-back-production.up.railway.app/viajes/usuarios/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -242,7 +242,7 @@ export async function login(email: string, password: string) {
   //crea un usuario
 export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   try {
-    const response = await fetch("http://localhost:8586/viajes/usuarios", {
+    const response = await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/usuarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -274,7 +274,7 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
         idioma?: string
     ): Promise<Usuario[]> {
         try {
-        const response = await fetch("http://localhost:8586/viajes/usuarios/filtrar"); 
+        const response = await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/usuarios/filtrar"); 
     
         if (!response.ok) {
             throw new Error("Error al obtener los usuarios");
@@ -303,7 +303,7 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   // obtiene el usuario activo de la sesión
   export async function obtenerUsuarioLogueado(): Promise<Usuario> {
     try {
-      const response = await fetch("http://localhost:8586/viajes/usuario-logueado", {
+      const response = await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/usuario-logueado", {
         method: "GET",
         credentials: "include", 
       });
@@ -321,7 +321,7 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   
   
   export async function logout() {
-    await fetch("http://localhost:8586/viajes/logout", {
+    await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -330,7 +330,7 @@ export async function crearUsuario(usuario: Usuario): Promise<Usuario> {
   //obtiene las foto de perfil para crear o editar un usuario
   export async function obtenerFotosPerfil(): Promise<Fotoperfil[]> {
     try {
-      const response = await fetch("http://localhost:8586/viajes/fotoperfil");
+      const response = await fetch("https://tfg-vacaciones-back-production.up.railway.app/viajes/fotoperfil");
       if (!response.ok) {
         throw new Error("Error al obtener las fotos de perfil");
       }
